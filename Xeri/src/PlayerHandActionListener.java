@@ -20,10 +20,8 @@ public class PlayerHandActionListener implements ActionListener{
 		
 		Game.getInstance().getKi2().setTurn(true);
 		((Card)e.getSource()).removeActionListener(this);
-		
-//		((JButton) e.getSource()).setEnabled(false);
 		Board.getInstance().validate();
-		
+		Board.getInstance().notifyThread();
 		
 		
 	}

@@ -5,7 +5,7 @@ import java.awt.GridBagLayout;
 import javax.swing.*;
 
 public class Board extends JFrame {
-	
+
 	public static Board board;
 
 	Deck deck;
@@ -17,20 +17,18 @@ public class Board extends JFrame {
 	JPanel playerHand;
 	JPanel contentPane;
 	JPanel pointDisplay;
-	
+
 	JLabel playerPointLabel;
 	JLabel oppPointLabel;
-	
+
 	JScrollPane tableScrollPane;
 	JPanel table;
-	
-	
+
 	int playerPoints = 0;
 	int oppPoints = 0;
-	
+
 	GridBagConstraints c = new GridBagConstraints();
-	
-	
+
 	public Board() {
 
 		deck = new Deck();
@@ -38,50 +36,48 @@ public class Board extends JFrame {
 		playPile = new CardPile();
 		boardPile = new CardPile();
 
-		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
+
 		oppHand = new JPanel();
 		oppHand.setLayout(new BoxLayout(oppHand, BoxLayout.LINE_AXIS));
-//		oppHand.setPreferredSize(new Dimension(1300, 300));
+		// oppHand.setPreferredSize(new Dimension(1300, 300));
 		oppHand.setMinimumSize(new Dimension(1300, 200));
-		
+
 		playerHand = new JPanel();
 		playerHand.setLayout(new BoxLayout(playerHand, BoxLayout.LINE_AXIS));
-//		playerHand.setPreferredSize(new Dimension(1300, 300));
+		// playerHand.setPreferredSize(new Dimension(1300, 300));
 		playerHand.setMinimumSize(new Dimension(1300, 200));
-		
+
 		table = new JPanel();
 		table.setLayout(new BoxLayout(table, BoxLayout.LINE_AXIS));
-		table.setPreferredSize(new Dimension(800,  200));
-//		table.setMinimumSize(new Dimension(800, 200));
+		table.setPreferredSize(new Dimension(800, 200));
+		// table.setMinimumSize(new Dimension(800, 200));
 
-		
-		tableScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		tableScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		tableScrollPane.getHorizontalScrollBar().setValue(tableScrollPane.getHorizontalScrollBar().getMaximum());
-		tableScrollPane.setMaximumSize(new Dimension(170*4, 250));
+		tableScrollPane.setMaximumSize(new Dimension(170 * 4, 250));
 		tableScrollPane.setMinimumSize(new Dimension(800, 250));
-		tableScrollPane.setPreferredSize(new Dimension(170*4, 250));
+		tableScrollPane.setPreferredSize(new Dimension(170 * 4, 250));
 		tableScrollPane.setVisible(true);
-		
-		playerPointLabel = new JLabel("You have: "+playerPoints+"   ");
-		oppPointLabel = new JLabel("Opp has: "+oppPoints+"   ");
-		
+
+		playerPointLabel = new JLabel("You have: " + playerPoints + "   ");
+		oppPointLabel = new JLabel("Opp has: " + oppPoints + "   ");
+
 		pointDisplay = new JPanel();
 		pointDisplay.setLayout(new BoxLayout(pointDisplay, BoxLayout.PAGE_AXIS));
 		pointDisplay.add(playerPointLabel);
 		pointDisplay.add(Box.createVerticalGlue());
 		pointDisplay.add(oppPointLabel);
-		
-		
-		//setting the frame
+
+		// setting the frame
 		contentPane = new JPanel();
 		contentPane.setLayout(new GridBagLayout());
 		c.gridx = 0;
 		c.gridy = 0;
 		contentPane.setSize(new Dimension(1500, 800));
 		contentPane.add(oppHand, c);
-		c.gridy = 2; 
+		c.gridy = 2;
 		contentPane.add(playerHand, c);
 		c.gridy = 1;
 		contentPane.add(tableScrollPane, c);
@@ -94,95 +90,116 @@ public class Board extends JFrame {
 		this.setSize(new Dimension(1500, 800));
 		this.setLocation(20, 10);
 		this.setVisible(true);
-		
+
 	}
-	
+
 	public static void checkTrick(String who) {
 		int tmp = Board.getInstance().getBoardPile().size();
 
-		if(Board.getInstance().getBoardPile().size() > 1){
-			if(HelpMethods.isHit() || HelpMethods.playedJack()) {
-			
-				if(who.equals("opp")) {
-					if(tmp == 2 && !HelpMethods.playedJack()) {
+		if (Board.getInstance().getBoardPile().size() > 1) {
+			if (HelpMethods.isHit() || HelpMethods.playedJack()) {
+
+				if (who.equals("opp")) {
+					if (tmp == 2 && !HelpMethods.playedJack()) {
 						Board.getInstance().getOppPile().addXeri();
 					}
-					for (int i = 0; i < tmp; i++) {	
+					for (int i = 0; i < tmp; i++) {
 						Board.getInstance().getOppPile().add(Board.getInstance().getBoardPile().get(0));
 						Board.getInstance().getTable().remove(Board.getInstance().getBoardPile().get(0));
 						Board.getInstance().getBoardPile().remove(0);
-						
+
 					}
-					System.out.println("Opp points -> "+Board.getInstance().getOppPile().countPoints());
 					Board.getInstance().getTable().setPreferredSize(new Dimension(400, 200));
 					Board.getInstance().getTableScrollPane().getHorizontalScrollBar().setValue(0);
 					Board.getInstance().validate();
-					
-				}else if(who.equals("player")) {
-					if(tmp == 2 && !HelpMethods.playedJack()) {
+
+				} else if (who.equals("player")) {
+					if (tmp == 2 && !HelpMethods.playedJack()) {
 						Board.getInstance().getPlayPile().addXeri();
 					}
 					for (int i = 0; i < tmp; i++) {
 						Board.getInstance().getPlayPile().add(Board.getInstance().getBoardPile().get(0));
 						Board.getInstance().getTable().remove(Board.getInstance().getBoardPile().get(0));
 						Board.getInstance().getBoardPile().remove(0);
-						
+
 					}
-					
-					System.out.println("player points -> "+Board.getInstance().getPlayPile().countPoints());					
 					Board.getInstance().getTable().setPreferredSize(new Dimension(400, 200));
 					Board.getInstance().getTableScrollPane().getHorizontalScrollBar().setValue(0);
 					Board.getInstance().validate();
 				}
-			}	
+			}
 		}
 	}
-	
+
 	public void initiateGame() {
 		Board.getInstance().getDeck().deal(Board.getInstance().getOppHand());
 		Board.getInstance().getDeck().deal(Board.getInstance().getPlayerHand());
 		Board.getInstance().getDeck().firstFourCards();
 		Board.getInstance().validate();
-		
+
 	}
 
-	public static Board getInstance () {
-		    if (Board.board == null) {
-		    	Board.board = new Board();
-		    }
-		    return Board.board;
+	public static Board getInstance() {
+		if (Board.board == null) {
+			Board.board = new Board();
+		}
+		return Board.board;
 	}
-	
+
 	public void updatePoints() {
-		playerPointLabel.setText("You have: "+playerPoints+"   ");
-		oppPointLabel.setText("Opp has: "+oppPoints+"   ");
+		playerPointLabel.setText("You have: " + playerPoints + "   ");
+		oppPointLabel.setText("Opp has: " + oppPoints + "   ");
 		this.validate();
 	}
-	
+
 	public void resetBoard() {
 		deck = new Deck();
 		oppPile = new CardPile();
 		playPile = new CardPile();
 		boardPile = new CardPile();
-		
+
 		Board.getInstance().initiateGame();
-		
+
 	}
-	
-	public synchronized void waitForNewGame() throws InterruptedException{
-		this.wait();
+
+	public synchronized void waitForNewGame() throws InterruptedException {
+
+		System.out.println("Thread wartet");
+		wait();
 	}
-	
+
 	public synchronized void startNewGame() {
 		this.notifyAll();
 	}
+
+	public synchronized void doMoveForAlwayLeftKi(boolean first, String name) {
+
 	
+//		notify();
+		
+		System.out.println(name +" does a move");
+		if (first) {
+			((JButton) Board.getInstance().getPlayerHand().getComponent(0)).doClick();
+			Game.getInstance().getKi().setTurn(false);
 
+		} else {
+			((JButton) Board.getInstance().getOppHand().getComponent(0)).doClick();
+			Game.getInstance().getKi2().setTurn(false);
 
+		}
+		
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 
-
-
-
+	}
+	
+	public synchronized void notifyThread() {
+		notify();
+	}
 
 	public synchronized Deck getDeck() {
 		return deck;
@@ -287,4 +304,6 @@ public class Board extends JFrame {
 	public synchronized void setOppPoints(int oppPoints) {
 		this.oppPoints = oppPoints;
 	}
+
+
 }

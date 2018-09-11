@@ -18,6 +18,8 @@ public class OppHandActionListener implements ActionListener{
 		Game.getInstance().getKi().setTurn(true);
 		((Card)e.getSource()).removeActionListener(this);
 		Board.getInstance().validate();
+		Board.getInstance().notifyThread();
+
 
 	}
 	

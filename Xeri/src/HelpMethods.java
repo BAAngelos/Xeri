@@ -19,7 +19,7 @@ public class HelpMethods {
 				!Board.getInstance().getDeck().isEmpty());
 	}
 	
-	//Game Over when all the Cards in the Deck has been played and the points have to be countes
+	//Game Over when all the Cards in the Deck has been played and the points have to be counted
 	public static synchronized boolean gameOver() {
 		
 		return  (Board.getInstance().getOppHand().getComponentCount()== 0 && 

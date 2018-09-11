@@ -1,3 +1,4 @@
+import javax.sql.rowset.Joinable;
 
 public class Game implements Runnable {
 
@@ -8,55 +9,51 @@ public class Game implements Runnable {
 
 	public Game() {
 		System.out.println(Board.getInstance().getDeck().countPoints());
-		
+		ki = new AlwaysLeftAi(true, "player");
+		ki2 = new AlwaysLeftAi(false, "opponent");
+
+		ki2.start();
+		ki.start();
 	}
 
 	@Override
 	public void run() {
-
 
 		while (!HelpMethods.matchOver()) {
 
 			Board.getInstance().resetBoard();
 			Board.getInstance().startNewGame();
 
-			ki = new AlwaysLeftAi(true);
-			ki2 = new AlwaysLeftAi(false);
-			new Thread(ki2).start();
-			new Thread(ki).start();
-
 			while (!HelpMethods.gameOver()) {
-				
 
-//				System.out.println("player xeri -> "+ Board.getInstance().getPlayPile().getNumberOfXeri());
-//				System.out.println("opp xeri -> "+ Board.getInstance().getOppPile().getNumberOfXeri());
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				// System.out.println("player xeri -> "+
+				// Board.getInstance().getPlayPile().getNumberOfXeri());
+				// System.out.println("opp xeri -> "+
+				// Board.getInstance().getOppPile().getNumberOfXeri());
 
 				if (HelpMethods.roundOver()) {
+					System.out.println("runde ist vorbei");
+
 					Board.getInstance().getDeck().deal(Board.getInstance().getOppHand());
 					Board.getInstance().getDeck().deal(Board.getInstance().getPlayerHand());
 					Board.getInstance().validate();
 				}
+				
 
 			}
 
 			HelpMethods.distributeRestCards();
 
-			System.out.println("Player: xires -> "+Board.getInstance().getPlayPile().getNumberOfXeri()+ " + total Points " + Board.getInstance().getPlayPile().countPoints());
-			System.out.println("opp: xires -> "+Board.getInstance().getOppPile().getNumberOfXeri()+ " + total Points " + Board.getInstance().getOppPile().countPoints());
+			System.out.println("Player: xires -> " + Board.getInstance().getPlayPile().getNumberOfXeri()
+					+ " + total Points " + Board.getInstance().getPlayPile().countPoints());
+			System.out.println("opp: xires -> " + Board.getInstance().getOppPile().getNumberOfXeri()
+					+ " + total Points " + Board.getInstance().getOppPile().countPoints());
 
-			Board.getInstance().setPlayerPoints( Board.getInstance().getPlayerPoints() + Board.getInstance().getPlayPile().countPoints() );
-			Board.getInstance().setOppPoints( Board.getInstance().getOppPoints() + Board.getInstance().getOppPile().countPoints() );
+			Board.getInstance().setPlayerPoints(
+					Board.getInstance().getPlayerPoints() + Board.getInstance().getPlayPile().countPoints());
+			Board.getInstance()
+					.setOppPoints(Board.getInstance().getOppPoints() + Board.getInstance().getOppPile().countPoints());
 			Board.getInstance().updatePoints();
-			
-			
-			
-			
-			
 
 		}
 
@@ -76,8 +73,6 @@ public class Game implements Runnable {
 	public void setKi(AlwaysLeftAi ki) {
 		this.ki = ki;
 	}
-	
-	
 
 	public AlwaysLeftAi getKi2() {
 		return ki2;
@@ -96,8 +91,7 @@ public class Game implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		Game.getInstance();
-		Game.getInstance().setGoal(21);
+		Game.getInstance().setGoal(51);
 		new Thread(Game.getInstance()).start();
 
 	}

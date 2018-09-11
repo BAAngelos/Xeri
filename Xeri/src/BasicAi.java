@@ -1,7 +1,7 @@
 
-public class BasicAi {
+public class BasicAi extends Thread{
 	boolean first;
-	boolean turn;
+	volatile boolean turn;
 	
 	public BasicAi(boolean goingFirst) {
 		if(goingFirst) {
