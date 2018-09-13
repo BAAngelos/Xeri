@@ -32,15 +32,15 @@ public class AlwaysLeftAi extends Thread{
 			while (!HelpMethods.gameOver()) {
 			
 				while (!HelpMethods.roundOver()) {
-					
+					if(this.first && Board.getInstance().getPlayerHand().getComponentCount() == 0) {
+						break;
+					}else if(!this.first && Board.getInstance().getOppHand().getComponentCount() == 0) {
+						break;
+					}
 					if(this.turn) {
 						Board.getInstance().doMoveForAlwayLeftKi(first, name);		
 					}
 					
-					
-				}
-				
-				while(HelpMethods.roundOver()) {
 					
 				}
 				

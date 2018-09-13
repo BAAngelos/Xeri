@@ -1,4 +1,4 @@
-import javax.sql.rowset.Joinable;
+
 
 public class Game implements Runnable {
 
@@ -37,6 +37,7 @@ public class Game implements Runnable {
 					Board.getInstance().getDeck().deal(Board.getInstance().getOppHand());
 					Board.getInstance().getDeck().deal(Board.getInstance().getPlayerHand());
 					Board.getInstance().validate();
+					Board.getInstance().startNewGame();
 				}
 				
 
