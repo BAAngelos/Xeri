@@ -2,6 +2,11 @@ import java.util.ArrayList;
 
 public class CardPile extends ArrayList<Card>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	int numberOfXeri = 0;
 	
 	public void addXeri() {

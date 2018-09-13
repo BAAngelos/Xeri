@@ -5,6 +5,11 @@ import javax.swing.*;
 
 public class Card extends JButton {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	Suit suit;
 	int value;
 	int points;

@@ -6,6 +6,11 @@ import javax.swing.*;
 
 public class Board extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static Board board;
 
 	Deck deck;

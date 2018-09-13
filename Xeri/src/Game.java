@@ -32,7 +32,7 @@ public class Game implements Runnable {
 				// Board.getInstance().getOppPile().getNumberOfXeri());
 
 				if (HelpMethods.roundOver()) {
-					System.out.println("runde ist vorbei");
+					System.out.println("runde ist vorbei--------------------------------------");
 
 					Board.getInstance().getDeck().deal(Board.getInstance().getOppHand());
 					Board.getInstance().getDeck().deal(Board.getInstance().getPlayerHand());
@@ -94,6 +94,7 @@ public class Game implements Runnable {
 	public static void main(String[] args) {
 		Game.getInstance().setGoal(51);
 		new Thread(Game.getInstance()).start();
+		
 
 	}
 

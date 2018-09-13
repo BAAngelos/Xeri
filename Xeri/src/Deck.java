@@ -4,6 +4,11 @@ import javax.swing.JPanel;
 
 public class Deck extends CardPile{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Deck(){
 		for (int i = 1; i < 14; i++) {
 			this.add(new Card(i, Suit.CLUBS));

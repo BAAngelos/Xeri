@@ -1,7 +1,11 @@
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 
 public class HelpMethods {
 
+	static boolean roundOver = false;
+	static boolean gameOver = false;
+	static boolean matchOver = false;
+	
 	public static boolean isHit() {
 		return 	Board.getInstance().getBoardPile().get(Board.getInstance().getBoardPile().size()-1).getValue() ==
 				Board.getInstance().getBoardPile().get(Board.getInstance().getBoardPile().size()-2).getValue();	
@@ -14,17 +18,32 @@ public class HelpMethods {
 	//round Over when all the cards in the hands have been played but not all the cards in the deck
 	public static synchronized boolean roundOver() {
 		
-		return (Board.getInstance().getOppHand().getComponentCount()== 0 && 
+		if(Board.getInstance().getOppHand().getComponentCount()== 0 && 
 				Board.getInstance().getPlayerHand().getComponentCount() == 0 &&
-				!Board.getInstance().getDeck().isEmpty());
+				!Board.getInstance().getDeck().isEmpty()) {
+			roundOver = true;
+
+		}else if(Board.getInstance().getOppHand().getComponentCount()== 6 && 
+				Board.getInstance().getPlayerHand().getComponentCount() == 6) {
+			roundOver = false;
+		}
+		
+			
+		return roundOver;
 	}
 	
 	//Game Over when all the Cards in the Deck has been played and the points have to be counted
 	public static synchronized boolean gameOver() {
 		
-		return  (Board.getInstance().getOppHand().getComponentCount()== 0 && 
+		if(Board.getInstance().getOppHand().getComponentCount()== 0 && 
 				Board.getInstance().getPlayerHand().getComponentCount() == 0 && 
-				Board.getInstance().getDeck().isEmpty());
+				Board.getInstance().getDeck().isEmpty()) {
+			gameOver = true;
+		}else if(!Board.getInstance().getDeck().isEmpty()) {
+			gameOver = false;
+		}
+		
+		return  gameOver;
 	}
 	
 	//match Over when someone reaches the point goal after several games

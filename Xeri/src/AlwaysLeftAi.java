@@ -1,4 +1,4 @@
-import javax.swing.JButton;
+
 
 public class AlwaysLeftAi extends Thread{
 	boolean first;
