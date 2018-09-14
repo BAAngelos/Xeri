@@ -39,8 +39,9 @@ public class TreeSearch {
 			// Phase 1 - Selection
 			Node promisingNode = selectPromisingNode(rootNode);
 			// Phase 2 - Expansion
-			if (promisingNode.getState().getSimulatedBoard().checkStatus() == SimulatedBoard.IN_PROGRESS)
-				expandNode(promisingNode);
+			if (promisingNode.getState().getSimulatedBoard().checkStatus() == SimulatedBoard.IN_PROGRESS) {
+				expandNode(promisingNode);				
+			}
 
 			// Phase 3 - Simulation
 			Node nodeToExplore = promisingNode;
@@ -53,7 +54,7 @@ public class TreeSearch {
 		}
 
 		Node winnerNode = rootNode.getChildWithMaxScore();
-		tree.setRoot(winnerNode);
+		  
 		return winnerNode.getState().getSimulatedBoard();
 	}
 
@@ -62,7 +63,7 @@ public class TreeSearch {
 		while (node.getChildArray().size() != 0) {
 			node = UCT.findBestNodeWithUCT(node);
 		}
-		return node;
+		return node; 
 	}
 
 	private void expandNode(Node node) {

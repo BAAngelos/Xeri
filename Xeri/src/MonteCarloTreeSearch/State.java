@@ -1,5 +1,6 @@
 package MonteCarloTreeSearch;
 
+
 import java.util.List;
 
 public class State {
@@ -88,5 +89,9 @@ public class State {
 	public List<State> getAllPossibleStates() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public static void main(String[] args) {
+//		Board.getInstace();
 	}
 }

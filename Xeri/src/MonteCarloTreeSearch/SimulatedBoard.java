@@ -2,7 +2,8 @@ package MonteCarloTreeSearch;
 
 public class SimulatedBoard {
 	
-	public static final int IN_PROGRESS = 0;
+	
+	public static final int IN_PROGRESS = -1;
 
 	public SimulatedBoard() {
 		// TODO Auto-generated constructor stub

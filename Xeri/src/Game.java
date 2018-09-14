@@ -1,5 +1,4 @@
 
-
 public class Game implements Runnable {
 
 	public static Game game;
@@ -95,7 +94,6 @@ public class Game implements Runnable {
 		Game.getInstance().setGoal(51);
 		new Thread(Game.getInstance()).start();
 		
-
 	}
 
 }
