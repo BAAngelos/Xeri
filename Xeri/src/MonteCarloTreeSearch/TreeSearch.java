@@ -2,6 +2,8 @@ package MonteCarloTreeSearch;
 
 import java.util.List;
 
+import TheGame.Board;
+
 public class TreeSearch {
 
 	private static final int WIN_SCORE = 10;
@@ -21,14 +23,16 @@ public class TreeSearch {
 	}
 
 	private int getMillisForCurrentLevel() {
-		return 2 * (this.level - 1) + 1;
+		return 8 * (this.level - 1) + 1;
 	}
 
-	public SimulatedBoard findNextMove(SimulatedBoard board, int playerNo) {
+	public   SimulatedBoard findNextMove(Board boardGui, int playerNo) {
 		// TODO einstellung von der Zeit die ich geben werde
+		SimulatedBoard board = new SimulatedBoard(boardGui);
 		long start = System.currentTimeMillis();
 		long end = start + 60 * getMillisForCurrentLevel();
 
+		
 		opponent = 3 - playerNo;
 		Tree tree = new Tree();
 		Node rootNode = tree.getRoot();
@@ -40,7 +44,7 @@ public class TreeSearch {
 			Node promisingNode = selectPromisingNode(rootNode);
 			// Phase 2 - Expansion
 			if (promisingNode.getState().getSimulatedBoard().checkStatus() == SimulatedBoard.IN_PROGRESS) {
-				expandNode(promisingNode);				
+				expandNode(promisingNode);
 			}
 
 			// Phase 3 - Simulation
@@ -54,7 +58,7 @@ public class TreeSearch {
 		}
 
 		Node winnerNode = rootNode.getChildWithMaxScore();
-		  
+
 		return winnerNode.getState().getSimulatedBoard();
 	}
 
@@ -63,7 +67,7 @@ public class TreeSearch {
 		while (node.getChildArray().size() != 0) {
 			node = UCT.findBestNodeWithUCT(node);
 		}
-		return node; 
+		return node;
 	}
 
 	private void expandNode(Node node) {
@@ -80,8 +84,9 @@ public class TreeSearch {
 		Node tempNode = nodeToExplore;
 		while (tempNode != null) {
 			tempNode.getState().incrementVisit();
-			if (tempNode.getState().getPlayerNo() == playerNo)
-				tempNode.getState().addScore(WIN_SCORE);
+			if (tempNode.getState().getPlayerNo() == playerNo) {
+				tempNode.getState().addScore(1);
+			}
 			tempNode = tempNode.getParent();
 		}
 	}

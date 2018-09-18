@@ -69,16 +69,12 @@ public class State {
 	}
 
 	void addScore(double score) {
-		if (this.winCount != Integer.MIN_VALUE)
+		if (this.winCount != Integer.MIN_VALUE) {
 			this.winCount += score;
+		}
 	}
 
-//	    void randomPlay() {
-//	        List<Position> availablePositions = this.board.getEmptyPositions();
-//	        int totalPossibilities = availablePositions.size();
-//	        int selectRandom = (int) (Math.random() * totalPossibilities);
-//	        this.board.performMove(this.playerNo, availablePositions.get(selectRandom));
-//	    }
+
 
 	void togglePlayer() {
 		this.playerNo = 3 - this.playerNo;

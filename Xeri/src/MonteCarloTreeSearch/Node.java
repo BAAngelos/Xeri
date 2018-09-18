@@ -1,6 +1,8 @@
 package MonteCarloTreeSearch;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Node {
@@ -67,8 +69,9 @@ public class Node {
 	}
 
 	public Node getChildWithMaxScore() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return Collections.max(this.childArray, Comparator.comparing(c -> {
+            return c.getState().getVisitCount();
+        }));
+}
 
 }
