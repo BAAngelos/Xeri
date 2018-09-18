@@ -1,3 +1,4 @@
+package TheGame;
 import java.awt.Color;
 import java.awt.Dimension;
 

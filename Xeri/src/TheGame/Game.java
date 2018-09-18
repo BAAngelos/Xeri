@@ -1,3 +1,4 @@
+package TheGame;
 
 public class Game implements Runnable {
 

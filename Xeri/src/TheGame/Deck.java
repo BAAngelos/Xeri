@@ -1,3 +1,4 @@
+package TheGame;
 import java.util.Collections;
 
 import javax.swing.JPanel;
