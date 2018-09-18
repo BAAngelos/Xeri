@@ -179,9 +179,6 @@ public class Board extends JFrame {
 	}
 
 	public synchronized void doMoveForAlwayLeftKi(boolean first, String name) {
-
-	
-//		notify();
 		
 		System.out.println(name +" does a move");
 		if (first) {
@@ -201,6 +198,15 @@ public class Board extends JFrame {
 		}
 		
 
+	}
+	
+	public synchronized void doMoveForMCTSKi(Card c) {
+		int CardsInHand = Board.getInstance().getPlayerHand().getComponentCount();
+		for (int i = 0; i < CardsInHand; i++) {
+			if(Board.getInstance().getPlayerHand().getComponent(i).equals(c)) {
+				 ((AbstractButton) Board.getInstance().getPlayerHand().getComponent(i)).doClick();
+			}
+		}
 	}
 	
 	public synchronized void notifyThread() {

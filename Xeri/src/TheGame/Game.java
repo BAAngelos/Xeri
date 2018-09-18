@@ -5,15 +5,19 @@ public class Game implements Runnable {
 	public static Game game;
 	AlwaysLeftAi ki;
 	AlwaysLeftAi ki2;
+	MonteCarloAI mctsKi;
 	int goal;
 
 	public Game() {
-		System.out.println(Board.getInstance().getDeck().countPoints());
-		ki = new AlwaysLeftAi(true, "player");
-		ki2 = new AlwaysLeftAi(false, "opponent");
-
-		ki2.start();
-		ki.start();
+		mctsKi = new MonteCarloAI(true, "MonteCarlso");
+		mctsKi.start();
+//		ki = new AlwaysLeftAi(true, "player");
+//		ki2 = new AlwaysLeftAi(false, "opponent");
+//
+//		ki2.start();
+//		ki.start();
+		
+		
 	}
 
 	@Override

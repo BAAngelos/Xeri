@@ -3,10 +3,10 @@ package MonteCarloTreeSearch;
 import java.util.List;
 
 import TheGame.Board;
+import TheGame.Card;
 
 public class TreeSearch {
 
-	private static final int WIN_SCORE = 10;
 	private int level;
 	private int opponent;
 
@@ -26,7 +26,7 @@ public class TreeSearch {
 		return 8 * (this.level - 1) + 1;
 	}
 
-	public   SimulatedBoard findNextMove(Board boardGui, int playerNo) {
+	public   Card findNextMove(Board boardGui, int playerNo) {
 		// TODO einstellung von der Zeit die ich geben werde
 		SimulatedBoard board = new SimulatedBoard(boardGui);
 		long start = System.currentTimeMillis();
@@ -58,8 +58,17 @@ public class TreeSearch {
 		}
 
 		Node winnerNode = rootNode.getChildWithMaxScore();
+		
+		
+		Card cardToPlay = null;
+		
+		for (int i = 0; i < winnerNode.getParent().getState().getSimulatedBoard().getP1Hand().size(); i++) {
+			if(!winnerNode.getParent().getState().getSimulatedBoard().getP1Hand().contains(winnerNode.getState().getSimulatedBoard().getP1Hand().get(i))) {
+				cardToPlay = winnerNode.getState().getSimulatedBoard().getP1Hand().get(i);
+			}
+		}		
 
-		return winnerNode.getState().getSimulatedBoard();
+		return cardToPlay;
 	}
 
 	private Node selectPromisingNode(Node rootNode) {
