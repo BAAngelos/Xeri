@@ -5,12 +5,13 @@ import TheGame.*;
 public class SimulatedBoard {
 
 	CardPile p1Hand;
-	CardPile p2Hand;
+	int p2Handsize;
 
 	CardPile p1Collect;
 	CardPile p2Collect;
 
 	CardPile field;
+	CardPile deck;
 
 	public static final int IN_PROGRESS = -1;
 	public static final int DRAW = 0;
@@ -23,26 +24,26 @@ public class SimulatedBoard {
 
 	public SimulatedBoard(Board board) {
 		p1Hand = new CardPile();
-		p2Hand = new CardPile();
+		p2Handsize = board.getOppHand().getComponentCount();
 		
 		for (int i = 0; i < board.getPlayerHand().getComponentCount(); i++) {
 			p1Hand.add((Card) board.getPlayerHand().getComponent(i));
 		}
-		for (int i = 0; i < board.getOppHand().getComponentCount(); i++) {
-			p2Hand.add((Card) board.getOppHand().getComponent(i));
-		}
+
 		
 		p1Collect = board.getPlayPile();
 		p2Collect = board.getOppPile();
 		field = board.getBoardPile();
+		deck = board.getDeck();
 	}
 	
 	public SimulatedBoard(SimulatedBoard sBoard) {
 		this.p1Collect = sBoard.getP1Collect();
 		this.p2Collect = sBoard.getP2Collect();
 		this.p1Hand = sBoard.getP1Hand();
-		this.p2Hand = sBoard.getP2Hand();
+		this.p2Handsize = sBoard.getP2Handsize();
 		this.field = sBoard.getField();
+		this.deck = sBoard.getDeck();
 	}
 
 	public void performMove(int player, Card c) {
@@ -55,11 +56,33 @@ public class SimulatedBoard {
 		if (player == P1) {
 			p1Hand.remove(c);
 		} else if (player == P2) {
-			p2Hand.remove(c);
+			deck.remove(c);
+			p2Handsize--;
 		}
 		field.add(c);
 
 		if (lastCard == playedCard) {
+			
+			if (player == P1) {
+				if(field.size() == 2) {
+					p1Collect.addXeri();
+				}
+				for (int i = 0; i < field.size(); i++) {
+					p1Collect.add(field.get(0));
+					field.remove(0);
+				}
+			} else if (player == P2) {
+				if(field.size() == 2) {
+					p2Collect.addXeri();
+				}
+				for (int i = 0; i < field.size(); i++) {
+					p2Collect.add(field.get(0));
+					field.remove(0);
+				}
+			}
+		}
+		
+		if(playedCard == 11 && field.size() > 1) {
 			if (player == P1) {
 				for (int i = 0; i < field.size(); i++) {
 					p1Collect.add(field.get(0));
@@ -76,9 +99,9 @@ public class SimulatedBoard {
 	}
 
 	public int checkStatus() {
-		if(p1Hand.size() > 0 || p2Hand.size() > 0) {
+		if(p1Hand.size() > 0 || p2Handsize > 0) {
 			return -1;
-		}else if(p1Hand.size() == 0 && p2Hand.size() == 0) {
+		}else if(p1Hand.size() == 0 && p2Handsize == 0) {
 			if(p1Collect.countPoints() > p2Collect.countPoints()) {
 				return 1;
 			}else if(p1Collect.countPoints() < p2Collect.countPoints()) {
@@ -97,12 +120,12 @@ public class SimulatedBoard {
 		this.p1Hand = p1Hand;
 	}
 
-	public CardPile getP2Hand() {
-		return p2Hand;
+	public int getP2Handsize() {
+		return p2Handsize;
 	}
 
-	public void setP2Hand(CardPile p2Hand) {
-		this.p2Hand = p2Hand;
+	public void setP2Handsize(int p2Hand) {
+		this.p2Handsize = p2Hand;
 	}
 
 	public CardPile getP1Collect() {
@@ -127,6 +150,14 @@ public class SimulatedBoard {
 
 	public void setField(CardPile field) {
 		this.field = field;
+	}
+
+	public CardPile getDeck() {
+		return deck;
+	}
+
+	public void setDeck(CardPile deck) {
+		this.deck = deck;
 	}
 	
 	

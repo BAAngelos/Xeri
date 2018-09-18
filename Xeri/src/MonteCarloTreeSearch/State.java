@@ -1,7 +1,10 @@
 package MonteCarloTreeSearch;
 
 
+import java.util.ArrayList;
 import java.util.List;
+
+import TheGame.Card;
 
 public class State {
 
@@ -82,13 +85,37 @@ public class State {
 	}
 
 	public void randomPlay() {
-		// TODO Auto-generated method stub
+		if(playerNo == 1) {
+			int cardsInHand = this.simulatedBoard.getP1Hand().size();
+			Card randomCard = simulatedBoard.getP1Hand().get((int) (Math.random() * cardsInHand));
+			this.simulatedBoard.performMove(this.playerNo, randomCard);
+		}else if(playerNo == 2) {
+			int possibleCard = this.simulatedBoard.getDeck().size();
+			Card randomCard = simulatedBoard.getDeck().get((int) (Math.random() * possibleCard));
+			this.simulatedBoard.performMove(this.playerNo, randomCard);
+		}
+		
 		
 	}
 
 	public List<State> getAllPossibleStates() {
-		// TODO Auto-generated method stub
-		return null;
+		List<State> possibleStates = new ArrayList<>();
+		if(playerNo == 1) {
+			for (int i = 0; i < simulatedBoard.getDeck().size(); i++) {
+				State newState = new State(simulatedBoard);
+				newState.getSimulatedBoard().performMove(2, simulatedBoard.getDeck().get(i));
+				possibleStates.add(newState);
+			}
+		}
+		if(playerNo == 2) {
+			for (int i = 0; i < simulatedBoard.getP1Hand().size(); i++) {
+				State newState = new State(simulatedBoard);
+				newState.getSimulatedBoard().performMove(1, simulatedBoard.getP1Hand().get(i));
+				possibleStates.add(newState);
+			}
+		}
+		
+		return possibleStates;
 	}
 	
 	public static void main(String[] args) {
