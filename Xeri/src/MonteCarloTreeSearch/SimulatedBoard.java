@@ -37,7 +37,7 @@ public class SimulatedBoard {
 		deck = Board.getInstance().getDeck();
 	}
 	
-	public SimulatedBoard(SimulatedBoard sBoard) {
+	public SimulatedBoard(SimulatedBoard sBoard) { 
 		this.p1Collect = sBoard.getP1Collect();
 		this.p2Collect = sBoard.getP2Collect();
 		this.p1Hand = sBoard.getP1Hand();
@@ -48,7 +48,7 @@ public class SimulatedBoard {
 
 	public void performMove(int player, Card c) {
 		int lastCard = -1;
-		if (field.size() > 0) {
+		if (this.field.size() > 0) {
 			lastCard = field.get(field.size() - 1).getValue();
 		}
 		int playedCard = c.getValue();

@@ -83,7 +83,13 @@ public class State {
 	public void randomPlay() {
 		if(playerNo == 1) {
 			int cardsInHand = this.simulatedBoard.getP1Hand().size();
+//			System.out.println("CardsInHand = "+cardsInHand);// +"\n randomCard = "+randomCard);
+//for (int i = 0; i < simulatedBoard.getP1Hand().size(); i++) {
+//	System.out.println(simulatedBoard.getP1Hand().get(i));
+//}
+//System.out.println(simulatedBoard.getP1Hand().size());
 			Card randomCard = simulatedBoard.getP1Hand().get((int) (Math.random() * cardsInHand));
+			//System.out.println("CardsInHand = "+cardsInHand);// +"\n randomCard = "+randomCard);
 			this.simulatedBoard.performMove(this.playerNo, randomCard);
 		}else if(playerNo == 2) {
 			int possibleCard = this.simulatedBoard.getDeck().size();
@@ -99,14 +105,17 @@ public class State {
 		if(playerNo == 1) {
 			for (int i = 0; i < simulatedBoard.getDeck().size(); i++) {
 				State newState = new State(simulatedBoard);
-				newState.getSimulatedBoard().performMove(2, simulatedBoard.getDeck().get(i));
+				newState.getSimulatedBoard().performMove(2, newState.getSimulatedBoard().getDeck().get(i));						//Syso
+				System.out.println(newState.getSimulatedBoard().toString());
 				possibleStates.add(newState);
 			}
 		}
 		if(playerNo == 2) {
 			for (int i = 0; i < simulatedBoard.getP1Hand().size(); i++) {
+				System.out.println(simulatedBoard.getP1Hand().size());
 				State newState = new State(simulatedBoard);
-				newState.getSimulatedBoard().performMove(1, simulatedBoard.getP1Hand().get(i));
+				newState.getSimulatedBoard().performMove(1, newState.getSimulatedBoard().getP1Hand().get(i));		//Syso
+				System.out.println(simulatedBoard.toString());
 				possibleStates.add(newState);
 			}
 		}

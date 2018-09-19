@@ -9,7 +9,7 @@ public class Game implements Runnable {
 	int goal;
 
 	public Game() {
-		mctsKi = new MonteCarloAI(true, "MonteCarlso");
+		mctsKi = new MonteCarloAI(true, "MonteCarlo");
 		mctsKi.start();
 //		ki = new AlwaysLeftAi(true, "player");
 //		ki2 = new AlwaysLeftAi(false, "opponent");
@@ -71,8 +71,8 @@ public class Game implements Runnable {
 		return Game.game;
 	}
 
-	public AlwaysLeftAi getKi() {
-		return ki;
+	public MonteCarloAI getKi() {
+		return mctsKi;
 	}
 
 	public void setKi(AlwaysLeftAi ki) {

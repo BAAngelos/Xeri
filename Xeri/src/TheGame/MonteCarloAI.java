@@ -25,12 +25,12 @@ public class MonteCarloAI extends Thread{
 
 	@Override
 	public void run() {
-		try {
-			Board.getInstance().waitForNewGame();
-			System.out.println(name + " Startet jetzt");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Board.getInstance().waitForNewGame();
+//			System.out.println(name + " Startet jetzt");
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
 		while (!HelpMethods.matchOver()) {
 
