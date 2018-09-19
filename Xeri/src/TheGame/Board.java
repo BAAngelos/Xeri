@@ -175,6 +175,7 @@ public class Board extends JFrame {
 	}
 
 	public synchronized void startNewGame() {
+		System.out.println("ich starte Das spiel -Game");
 		this.notifyAll();
 	}
 
