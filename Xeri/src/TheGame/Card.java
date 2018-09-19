@@ -99,6 +99,10 @@ public class Card extends JButton {
 	public void setPoints(int points) {
 		this.points = points;
 	}
+	
+	public String toString() {
+		return this.getText();
+	}
 
 	public static void main(String[] agrgs) {
 
