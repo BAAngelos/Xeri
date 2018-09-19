@@ -23,12 +23,12 @@ public class TreeSearch {
 	}
 
 	private int getMillisForCurrentLevel() {
-		return 8 * (this.level - 1) + 1;
+		return 15 * (this.level - 1) + 1;
 	}
 
-	public   Card findNextMove(Board boardGui, int playerNo) {
+	public   Card findNextMove(String thisBoard, int playerNo) {
 		// TODO einstellung von der Zeit die ich geben werde
-		SimulatedBoard board = new SimulatedBoard(boardGui);
+		SimulatedBoard board = new SimulatedBoard("this Board");
 		long start = System.currentTimeMillis();
 		long end = start + 60 * getMillisForCurrentLevel();
 
@@ -38,17 +38,22 @@ public class TreeSearch {
 		Node rootNode = tree.getRoot();
 		rootNode.getState().setSimulatedBoard(board);
 		rootNode.getState().setPlayerNo(opponent);
+		
 
-		while (System.currentTimeMillis() < end) {
+		while (System.currentTimeMillis() < end) { 
 			// Phase 1 - Selection
 			Node promisingNode = selectPromisingNode(rootNode);
+
 			// Phase 2 - Expansion
 			if (promisingNode.getState().getSimulatedBoard().checkStatus() == SimulatedBoard.IN_PROGRESS) {
 				expandNode(promisingNode);
 			}
 
+			System.out.println(promisingNode.getState().getSimulatedBoard().getP1Hand().size()+" in findeNExtMove");
+
 			// Phase 3 - Simulation
 			Node nodeToExplore = promisingNode;
+
 			if (promisingNode.getChildArray().size() > 0) {
 				nodeToExplore = promisingNode.getRandomChildNode();
 			}
@@ -73,6 +78,7 @@ public class TreeSearch {
 
 	private Node selectPromisingNode(Node rootNode) {
 		Node node = rootNode;
+
 		while (node.getChildArray().size() != 0) {
 			node = UCT.findBestNodeWithUCT(node);
 		}
@@ -102,6 +108,7 @@ public class TreeSearch {
 
 	private int simulateRandomPlayout(Node node) {
 		Node tempNode = new Node(node);
+		System.out.println(tempNode.getState().getSimulatedBoard().getP1Hand().size());
 		State tempState = tempNode.getState();
 		int boardStatus = tempState.getSimulatedBoard().checkStatus();
 

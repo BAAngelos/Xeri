@@ -43,7 +43,7 @@ public class MonteCarloAI extends Thread{
 						break;
 					}
 					if (this.turn) {
-						Board.getInstance().doMoveForMCTSKi(mcts.findNextMove(Board.getInstance(), 1));
+						Board.getInstance().doMoveForMCTSKi(mcts.findNextMove("this Board", 1));
 					}
 
 				}
