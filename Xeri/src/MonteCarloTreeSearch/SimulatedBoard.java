@@ -22,19 +22,19 @@ public class SimulatedBoard {
 		
 	}
 
-	public SimulatedBoard(Board board) {
+	public SimulatedBoard(String s) {
 		p1Hand = new CardPile();
-		p2Handsize = board.getOppHand().getComponentCount();
+		p2Handsize = Board.getInstance().getOppHand().getComponentCount();
 		
-		for (int i = 0; i < board.getPlayerHand().getComponentCount(); i++) {
-			p1Hand.add((Card) board.getPlayerHand().getComponent(i));
+		for (int i = 0; i < Board.getInstance().getPlayerHand().getComponentCount(); i++) {
+			p1Hand.add((Card) Board.getInstance().getPlayerHand().getComponent(i));
 		}
 
 		
-		p1Collect = board.getPlayPile();
-		p2Collect = board.getOppPile();
-		field = board.getBoardPile();
-		deck = board.getDeck();
+		p1Collect = Board.getInstance().getPlayPile();
+		p2Collect = Board.getInstance().getOppPile();
+		field = Board.getInstance().getBoardPile();
+		deck = Board.getInstance().getDeck();
 	}
 	
 	public SimulatedBoard(SimulatedBoard sBoard) {
@@ -158,6 +158,24 @@ public class SimulatedBoard {
 
 	public void setDeck(CardPile deck) {
 		this.deck = deck;
+	}
+	
+	public String toString() {
+		String tmp = "Player Hand: ";
+		
+		for (int i = 0; i < p1Hand.size(); i++) {
+			tmp += p1Hand.get(i).toString() + " ; ";
+		}
+		tmp += "\nField: ";
+		for (int i = 0; i < field.size(); i++) {
+			tmp += field.get(i) +" ; ";
+		}
+		tmp += "\n";
+		
+		
+		
+		return tmp;
+		
 	}
 	
 	
