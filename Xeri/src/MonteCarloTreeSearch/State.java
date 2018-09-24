@@ -4,6 +4,8 @@ package MonteCarloTreeSearch;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import TheGame.Card;
 
 public class State {
@@ -33,7 +35,7 @@ public class State {
 	}
 
 	void setSimulatedBoard(SimulatedBoard board) {
-		this.simulatedBoard = board;
+		this.simulatedBoard = new SimulatedBoard(board);
 	}
 
 	int getPlayerNo() {
@@ -83,14 +85,9 @@ public class State {
 	public void randomPlay() {
 		if(playerNo == 1) {
 			int cardsInHand = this.simulatedBoard.getP1Hand().size();
-//			System.out.println("CardsInHand = "+cardsInHand);// +"\n randomCard = "+randomCard);
-//for (int i = 0; i < simulatedBoard.getP1Hand().size(); i++) {
-//	System.out.println(simulatedBoard.getP1Hand().get(i));
-//}
-//System.out.println(simulatedBoard.getP1Hand().size());
 			Card randomCard = simulatedBoard.getP1Hand().get((int) (Math.random() * cardsInHand));
-			//System.out.println("CardsInHand = "+cardsInHand);// +"\n randomCard = "+randomCard);
 			this.simulatedBoard.performMove(this.playerNo, randomCard);
+			
 		}else if(playerNo == 2) {
 			int possibleCard = this.simulatedBoard.getDeck().size();
 			Card randomCard = simulatedBoard.getDeck().get((int) (Math.random() * possibleCard));
@@ -104,18 +101,17 @@ public class State {
 		List<State> possibleStates = new ArrayList<>();
 		if(playerNo == 1) {
 			for (int i = 0; i < simulatedBoard.getDeck().size(); i++) {
-				State newState = new State(simulatedBoard);
+				SimulatedBoard newSim = (SimulatedBoard) SerializationUtils.clone(simulatedBoard);
+				State newState = new State(newSim);
 				newState.getSimulatedBoard().performMove(2, newState.getSimulatedBoard().getDeck().get(i));						//Syso
-				System.out.println(newState.getSimulatedBoard().toString());
 				possibleStates.add(newState);
 			}
 		}
 		if(playerNo == 2) {
 			for (int i = 0; i < simulatedBoard.getP1Hand().size(); i++) {
-				System.out.println(simulatedBoard.getP1Hand().size());
-				State newState = new State(simulatedBoard);
-				newState.getSimulatedBoard().performMove(1, newState.getSimulatedBoard().getP1Hand().get(i));		//Syso
-				System.out.println(simulatedBoard.toString());
+				SimulatedBoard newSim = (SimulatedBoard) SerializationUtils.clone(simulatedBoard);
+				State newState = new State(newSim);
+				newState.getSimulatedBoard().performMove(1, newState.getSimulatedBoard().getP1Hand().get(i));
 				possibleStates.add(newState);
 			}
 		}
@@ -123,7 +119,14 @@ public class State {
 		return possibleStates;
 	}
 	
-	public static void main(String[] args) {
-//		Board.getInstace();
+
+	public State copyState(State s) {
+		State newState = new State();
+		newState.setPlayerNo(s.getPlayerNo());
+		newState.setSimulatedBoard(s.getSimulatedBoard());
+		newState.setVisitCount(s.getVisitCount());
+		newState.setWinScore(s.getWinScore());
+		
+		return newState;
 	}
 }

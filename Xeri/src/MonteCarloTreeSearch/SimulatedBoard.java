@@ -1,8 +1,10 @@
 package MonteCarloTreeSearch;
 
+import java.io.Serializable;
+
 import TheGame.*;
 
-public class SimulatedBoard {
+public class SimulatedBoard implements Serializable{
 
 	CardPile p1Hand;
 	int p2Handsize;
@@ -12,6 +14,7 @@ public class SimulatedBoard {
 
 	CardPile field;
 	CardPile deck;
+	
 
 	public static final int IN_PROGRESS = -1;
 	public static final int DRAW = 0;
@@ -38,12 +41,23 @@ public class SimulatedBoard {
 	}
 	
 	public SimulatedBoard(SimulatedBoard sBoard) { 
-		this.p1Collect = sBoard.getP1Collect();
-		this.p2Collect = sBoard.getP2Collect();
-		this.p1Hand = sBoard.getP1Hand();
-		this.p2Handsize = sBoard.getP2Handsize();
-		this.field = sBoard.getField();
-		this.deck = sBoard.getDeck();
+
+		this(sBoard.getP1Collect(), sBoard.getP2Collect(), sBoard.getP1Hand(), sBoard.getP2Handsize(), sBoard.getField(), sBoard.getDeck());
+//		this.p1Collect = sBoard.getP1Collect();
+//		this.p2Collect = sBoard.getP2Collect();
+//		this.p1Hand = sBoard.getP1Hand();
+//		this.p2Handsize = sBoard.getP2Handsize();
+//		this.field = sBoard.getField();
+//		this.deck = sBoard.getDeck();
+	}
+	
+	public SimulatedBoard(CardPile p1c, CardPile p2c, CardPile p1h, int p2size, CardPile field, CardPile deck) {
+		this.p1Collect = p1c;
+		this.p2Collect = p2c;
+		this.deck = deck;
+		this.field = field;
+		this.p1Hand = p1h;
+		this.p2Handsize = p2size;
 	}
 
 	public void performMove(int player, Card c) {
@@ -177,7 +191,6 @@ public class SimulatedBoard {
 		return tmp;
 		
 	}
-	
 	
 
 }

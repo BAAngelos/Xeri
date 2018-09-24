@@ -40,7 +40,7 @@ public class TreeSearch {
 		rootNode.getState().setPlayerNo(opponent);
 		
 
-		while (System.currentTimeMillis() < end) { 
+		while (System.currentTimeMillis() < Long.MAX_VALUE) { //end
 			// Phase 1 - Selection
 			Node promisingNode = selectPromisingNode(rootNode);
 
