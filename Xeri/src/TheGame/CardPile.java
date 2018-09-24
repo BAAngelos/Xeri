@@ -1,13 +1,10 @@
 package TheGame;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CardPile extends ArrayList<Card>{
+public class CardPile extends ArrayList<Card> implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
+
 	int numberOfXeri = 0;
 	
 	public void addXeri() {
