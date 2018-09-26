@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import TheGame.*;
 
+@SuppressWarnings("serial")
 public class SimulatedBoard implements Serializable{
 
 	CardPile p1Hand;

@@ -2,7 +2,6 @@ package MonteCarloTreeSearch;
 
 import java.util.List;
 
-import TheGame.Board;
 import TheGame.Card;
 
 public class TreeSearch {
@@ -30,6 +29,7 @@ public class TreeSearch {
 		// TODO einstellung von der Zeit die ich geben werde
 		SimulatedBoard board = new SimulatedBoard("this Board");
 		long start = System.currentTimeMillis();
+		@SuppressWarnings("unused")
 		long end = start + 60 * getMillisForCurrentLevel();
 
 		

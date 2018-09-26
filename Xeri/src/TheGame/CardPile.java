@@ -2,6 +2,7 @@ package TheGame;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class CardPile extends ArrayList<Card> implements Serializable{
 
 
