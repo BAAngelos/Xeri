@@ -62,6 +62,7 @@ public class SimulatedBoard implements Serializable{
 
 	public void performMove(int player, Card c) {
 		int lastCard = -1;
+		
 		if (this.field.size() > 0) {
 			lastCard = field.get(field.size() - 1).getValue();
 		}
@@ -73,7 +74,9 @@ public class SimulatedBoard implements Serializable{
 			deck.remove(c);
 			p2Handsize--;
 		}
+		
 		field.add(c);
+		int fieldSize = this.field.size();
 
 		if (lastCard == playedCard) {
 			
@@ -81,7 +84,7 @@ public class SimulatedBoard implements Serializable{
 				if(field.size() == 2) {
 					p1Collect.addXeri();
 				}
-				for (int i = 0; i < field.size(); i++) {
+				for (int i = 0; i < fieldSize; i++) {
 					p1Collect.add(field.get(0));
 					field.remove(0);
 				}
@@ -89,21 +92,21 @@ public class SimulatedBoard implements Serializable{
 				if(field.size() == 2) {
 					p2Collect.addXeri();
 				}
-				for (int i = 0; i < field.size(); i++) {
+				for (int i = 0; i < fieldSize; i++) {
 					p2Collect.add(field.get(0));
 					field.remove(0);
 				}
 			}
 		}
 		
-		if(playedCard == 11 && field.size() > 1) {
+		if(playedCard == 11 && fieldSize > 1) {
 			if (player == P1) {
-				for (int i = 0; i < field.size(); i++) {
+				for (int i = 0; i < fieldSize; i++) {
 					p1Collect.add(field.get(0));
 					field.remove(0);
 				}
 			} else if (player == P2) {
-				for (int i = 0; i < field.size(); i++) {
+				for (int i = 0; i < fieldSize; i++) {
 					p2Collect.add(field.get(0));
 					field.remove(0);
 				}
