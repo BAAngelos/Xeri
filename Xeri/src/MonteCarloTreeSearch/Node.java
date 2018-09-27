@@ -26,11 +26,11 @@ public class Node {
 		this.childArray = childArray;
 	}
 
-	public Node(Node node) {
+	public Node(Node node) { 
 		this.childArray = new ArrayList<>();
 		this.state = new State(node.getState());
 		if (node.getParent() != null) {
-			this.parent = node.getParent();
+			this.parent = new Node(node.getParent()); //maybe causing problem cause of shallow copy
 		}
 		List<Node> childArray = node.getChildArray();
 		for (Node child : childArray) {
