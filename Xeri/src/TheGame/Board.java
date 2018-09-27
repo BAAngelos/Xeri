@@ -206,8 +206,12 @@ public class Board extends JFrame {
 		for (int i = 0; i < CardsInHand; i++) {
 			if(Board.getInstance().getPlayerHand().getComponent(i).equals(c)) {
 				 ((AbstractButton) Board.getInstance().getPlayerHand().getComponent(i)).doClick();
+				 Game.getInstance().getKi().setTurn(false);
+				 return;
 			}
+			
 		}
+		Game.getInstance().getKi().setTurn(false);
 	}
 	
 	public synchronized void notifyThread() {
