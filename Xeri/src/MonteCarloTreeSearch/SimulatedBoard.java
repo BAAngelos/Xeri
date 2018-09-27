@@ -28,10 +28,15 @@ public class SimulatedBoard implements Serializable{
 
 	public SimulatedBoard(String s) {
 		p1Hand = new CardPile();
+		CardPile p2Hand = new CardPile();
 		p2Handsize = Board.getInstance().getOppHand().getComponentCount();
 		
 		for (int i = 0; i < Board.getInstance().getPlayerHand().getComponentCount(); i++) {
 			p1Hand.add((Card) Board.getInstance().getPlayerHand().getComponent(i));
+		}
+		
+		for (int i = 0; i < Board.getInstance().getOppHand().getComponentCount(); i++) {
+			p2Hand.add((Card) Board.getInstance().getOppHand().getComponent(i));
 		}
 
 		
@@ -39,17 +44,12 @@ public class SimulatedBoard implements Serializable{
 		p2Collect = Board.getInstance().getOppPile();
 		field = Board.getInstance().getBoardPile();
 		deck = Board.getInstance().getDeck();
+		deck.addAll(p2Hand);
 	}
 	
 	public SimulatedBoard(SimulatedBoard sBoard) { 
 
 		this(sBoard.getP1Collect(), sBoard.getP2Collect(), sBoard.getP1Hand(), sBoard.getP2Handsize(), sBoard.getField(), sBoard.getDeck());
-//		this.p1Collect = sBoard.getP1Collect();
-//		this.p2Collect = sBoard.getP2Collect();
-//		this.p1Hand = sBoard.getP1Hand();
-//		this.p2Handsize = sBoard.getP2Handsize();
-//		this.field = sBoard.getField();
-//		this.deck = sBoard.getDeck();
 	}
 	
 	public SimulatedBoard(CardPile p1c, CardPile p2c, CardPile p1h, int p2size, CardPile field, CardPile deck) {
@@ -98,7 +98,10 @@ public class SimulatedBoard implements Serializable{
 					field.remove(0);
 				}
 			}
+			return;
 		}
+		
+		
 		
 		if(playedCard == 11 && fieldSize > 1) {
 			if (player == P1) {
