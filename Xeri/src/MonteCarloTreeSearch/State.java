@@ -30,6 +30,10 @@ public class State {
 		this.simulatedBoard = new SimulatedBoard(board);
 	}
 
+	public State(SimulatedBoard board, int player) {
+		this.playerNo = player;
+		this.simulatedBoard = new SimulatedBoard(board);
+	}
 	SimulatedBoard getSimulatedBoard() {
 		return simulatedBoard;
 	}
