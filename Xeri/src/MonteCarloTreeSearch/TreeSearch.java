@@ -1,5 +1,6 @@
 package MonteCarloTreeSearch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.SerializationUtils;
@@ -23,15 +24,10 @@ public class TreeSearch {
 		this.level = level;
 	}
 
-//	private int getMillisForCurrentLevel() {
-//		return 15 * (this.level - 1) + 1;
-//	}
 
 	public   Card findNextMove(String thisBoard, int playerNo) {
-		// TODO einstellung von der Zeit die ich geben werde
 		SimulatedBoard board = new SimulatedBoard("this Board");
 		long start = System.currentTimeMillis();
-		@SuppressWarnings("unused")
 		long end = start + 4000;
 
 		
@@ -68,13 +64,11 @@ public class TreeSearch {
 		
 		
 		Card cardToPlay = null;
+		List<Card> parentList = new ArrayList<Card>(winnerNode.getParent().getState().getSimulatedBoard().getP1Hand());
+		List<Card> winnerList = new ArrayList<>(winnerNode.getState().getSimulatedBoard().getP1Hand());
+		parentList.removeAll(winnerList);
+		cardToPlay = parentList.get(0);
 		
-		for (int i = 0; i < winnerNode.getParent().getState().getSimulatedBoard().getP1Hand().size(); i++) {
-			if(!winnerNode.getParent().getState().getSimulatedBoard().getP1Hand().contains(winnerNode.getState().getSimulatedBoard().getP1Hand().get(i))) {
-				cardToPlay = winnerNode.getState().getSimulatedBoard().getP1Hand().get(i);
-			}
-		}		
-
 		return cardToPlay;
 	}
 
