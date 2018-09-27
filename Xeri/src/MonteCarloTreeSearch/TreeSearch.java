@@ -2,6 +2,8 @@ package MonteCarloTreeSearch;
 
 import java.util.List;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import TheGame.Card;
 
 public class TreeSearch {
@@ -21,16 +23,16 @@ public class TreeSearch {
 		this.level = level;
 	}
 
-	private int getMillisForCurrentLevel() {
-		return 15 * (this.level - 1) + 1;
-	}
+//	private int getMillisForCurrentLevel() {
+//		return 15 * (this.level - 1) + 1;
+//	}
 
 	public   Card findNextMove(String thisBoard, int playerNo) {
 		// TODO einstellung von der Zeit die ich geben werde
 		SimulatedBoard board = new SimulatedBoard("this Board");
 		long start = System.currentTimeMillis();
 		@SuppressWarnings("unused")
-		long end = start + 60 * getMillisForCurrentLevel();
+		long end = start + 4000;
 
 		
 		opponent = 3 - playerNo;
@@ -40,7 +42,7 @@ public class TreeSearch {
 		rootNode.getState().setPlayerNo(opponent);
 		
 
-		while (System.currentTimeMillis() < Long.MAX_VALUE) { //end
+		while (System.currentTimeMillis() < end) { //end
 			// Phase 1 - Selection
 			Node promisingNode = selectPromisingNode(rootNode);
 
@@ -107,15 +109,16 @@ public class TreeSearch {
 	}
 
 	private int simulateRandomPlayout(Node node) {
-		Node tempNode = new Node(node);
-		System.out.println(tempNode.getState().getSimulatedBoard().getP1Hand().size());
-		State tempState = tempNode.getState();
+	
+		int player = node.getState().getPlayerNo();
+		SimulatedBoard tmpSim = (SimulatedBoard) SerializationUtils.clone(node.getState().getSimulatedBoard());
+		State tempState = new State(tmpSim, player);
 		int boardStatus = tempState.getSimulatedBoard().checkStatus();
 
-		if (boardStatus == opponent) {
-			tempNode.getParent().getState().setWinScore(Integer.MIN_VALUE);
-			return boardStatus;
-		}
+//		if (boardStatus == opponent) {
+//			tempNode.getParent().getState().setWinScore(Integer.MIN_VALUE);
+//			return boardStatus;
+//		}
 		while (boardStatus == SimulatedBoard.IN_PROGRESS) {
 			tempState.togglePlayer();
 			tempState.randomPlay();
