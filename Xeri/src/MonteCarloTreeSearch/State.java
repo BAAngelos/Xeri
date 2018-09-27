@@ -89,7 +89,7 @@ public class State {
 	public void randomPlay() {
 		if(playerNo == 1) {
 			int cardsInHand = this.simulatedBoard.getP1Hand().size();
-			Card randomCard = simulatedBoard.getP1Hand().get((int) (Math.random() * cardsInHand));
+			Card randomCard = this.simulatedBoard.getP1Hand().get((int) (Math.random() * cardsInHand));
 			this.simulatedBoard.performMove(this.playerNo, randomCard);
 			
 		}else if(playerNo == 2) {
