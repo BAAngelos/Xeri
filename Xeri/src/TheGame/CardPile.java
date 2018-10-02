@@ -5,7 +5,20 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class CardPile extends ArrayList<Card> implements Serializable{
 
+	
+	
+	public CardPile() {
+		
+	}
 
+	public CardPile(CardPile cp) {
+		for (int i = 0; i < cp.size(); i++) {
+			Card c = cp.get(i);
+			this.add(c);
+		}
+		
+	}
+	
 	int numberOfXeri = 0;
 	
 	public void addXeri() {
@@ -40,6 +53,15 @@ public class CardPile extends ArrayList<Card> implements Serializable{
 
 	public void setNumberOfXeri(int numberOfXeri) {
 		this.numberOfXeri = numberOfXeri;
+	}
+	
+	public String toString() {
+		String tmp = "[";
+		for (int i = 0; i < this.size(); i++) {
+			tmp += this.get(i) +", ";
+		}
+		tmp += "]";
+		return tmp;
 	}
 	
 	
