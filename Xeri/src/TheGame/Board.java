@@ -37,10 +37,10 @@ public class Board extends JFrame {
 
 	public Board() {
 
-		deck = new Deck();
-		oppPile = new CardPile();
-		playPile = new CardPile();
-		boardPile = new CardPile();
+//		deck = new Deck();
+//		oppPile = new CardPile();
+//		playPile = new CardPile();
+//		boardPile = new CardPile();
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -102,7 +102,7 @@ public class Board extends JFrame {
 	public static void checkTrick(String who) {
 		int tmp = Board.getInstance().getBoardPile().size();
 
-		if (Board.getInstance().getBoardPile().size() > 1) {
+		if (tmp > 1) {
 			if (HelpMethods.isHit() || HelpMethods.playedJack()) {
 
 				if (who.equals("opp")) {
@@ -117,7 +117,7 @@ public class Board extends JFrame {
 					}
 					Board.getInstance().getTable().setPreferredSize(new Dimension(400, 200));
 					Board.getInstance().getTableScrollPane().getHorizontalScrollBar().setValue(0);
-					Board.getInstance().validate();
+					Game.getInstance().setLastTakenTrick(false);
 
 				} else if (who.equals("player")) {
 					if (tmp == 2 && !HelpMethods.playedJack()) {
@@ -131,17 +131,30 @@ public class Board extends JFrame {
 					}
 					Board.getInstance().getTable().setPreferredSize(new Dimension(400, 200));
 					Board.getInstance().getTableScrollPane().getHorizontalScrollBar().setValue(0);
-					Board.getInstance().validate();
+					Game.getInstance().setLastTakenTrick(true);
 				}
 			}
 		}
 	}
+	
+	public void deal() {
+		for (int i = 0; i < 6; i++) {
+			Board.getInstance().getDeck().get(0).addActionListener(new PlayerHandActionListener());
+			Board.getInstance().getPlayerHand().add(Board.getInstance().getDeck().get(0));
+			Board.getInstance().getDeck().remove(0);
+			
+			Board.getInstance().getDeck().get(0).addActionListener(new OppHandActionListener());
+			Board.getInstance().getOppHand().add(Board.getInstance().getDeck().get(0));
+			Board.getInstance().getDeck().remove(0);
+		}
+
+		
+	}
 
 	public void initiateGame() {
-		Board.getInstance().getDeck().deal(Board.getInstance().getOppHand());
-		Board.getInstance().getDeck().deal(Board.getInstance().getPlayerHand());
+
+		Board.getInstance().deal();
 		Board.getInstance().getDeck().firstFourCards();
-		Board.getInstance().validate();
 
 	}
 
@@ -155,16 +168,14 @@ public class Board extends JFrame {
 	public void updatePoints() {
 		playerPointLabel.setText("You have: " + playerPoints + "   ");
 		oppPointLabel.setText("Opp has: " + oppPoints + "   ");
-		this.validate();
+		Board.getInstance().validate();
 	}
 
 	public void resetBoard() {
-		deck = new Deck();
-		oppPile = new CardPile();
-		playPile = new CardPile();
-		boardPile = new CardPile();
-
-		Board.getInstance().initiateGame();
+		Board.getInstance().setDeck(new Deck());
+		Board.getInstance().setOppPile(new CardPile());
+		Board.getInstance().setPlayPile(new CardPile());
+		Board.getInstance().setBoardPile(new CardPile());
 
 	}
 
@@ -172,15 +183,18 @@ public class Board extends JFrame {
 
 		System.out.println("Thread wartet");
 		wait();
+		System.out.println("Thread startet");
 	}
 
 	public synchronized void startNewGame() {
 		System.out.println("ich starte Das spiel -Game");
-		this.notifyAll();
+		notifyAll();
+		System.out.println("In Start new Game nach Notify "+Board.getInstance().getDeck());
+
 	}
 
 	public synchronized void doMoveForAlwayLeftKi(boolean first, String name) {
-		
+
 		System.out.println(name +" does a move");
 		if (first) {
 			((JButton) Board.getInstance().getPlayerHand().getComponent(0)).doClick();
@@ -191,14 +205,6 @@ public class Board extends JFrame {
 			Game.getInstance().getKi2().setTurn(false);
 
 		}
-		
-		try {
-			wait();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-
 	}
 	
 	public synchronized void doMoveForMCTSKi(Card c) {
@@ -219,11 +225,11 @@ public class Board extends JFrame {
 	}
 
 	public synchronized Deck getDeck() {
-		return deck;
+		return Board.getInstance().deck;
 	}
 
 	public synchronized void setDeck(Deck deck) {
-		this.deck = deck;
+		Board.getInstance().deck = deck;
 	}
 
 	public synchronized CardPile getOppPile() {
