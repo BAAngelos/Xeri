@@ -21,25 +21,35 @@ public class Deck extends CardPile{
 		Collections.shuffle(this);
 	}
 	
-	public void deal(JPanel panel) {
-		for (int i = 0; i < 6; i++) {
-			if(panel.equals(Board.getInstance().getPlayerHand())) {
-				this.get(0).addActionListener(new PlayerHandActionListener());
-			}else {
-				this.get(0).addActionListener(new OppHandActionListener());
-			}
-			panel.add(this.get(0));
-			this.remove(0);
-		}
-		
-	}
-	
+//	public synchronized void deal(JPanel panel) {
+//		for (int i = 0; i < 6; i++) {
+//			if(panel.equals(Board.getInstance().getPlayerHand())) {
+//				this.get(0).addActionListener(new PlayerHandActionListener());
+//			}else {
+//				this.get(0).addActionListener(new OppHandActionListener());
+//			}
+//			panel.add(this.get(0));
+//			this.remove(0);
+//		}
+//		
+//	}
+//	
 	public void firstFourCards() {
 		for (int i = 0; i < 4; i++) {
-			Board.getInstance().getTable().add(this.get(0));
-			Board.getInstance().getBoardPile().add(this.get(0));
-			this.remove(0);
+			Board.getInstance().getTable().add(Board.getInstance().getDeck().get(0));
+			Board.getInstance().getBoardPile().add(Board.getInstance().getDeck().get(0));
+			Board.getInstance().getDeck().remove(0);
 		}
+	}
+	
+	public String toString() {
+		String tmp = "Size of Deck: "+this.size() +" -> [";
+		for (int i = 0; i < this.size(); i++) {
+			tmp += this.get(i)+", ";
+		}
+		tmp += "]";
+		
+		return tmp;
 	}
 	
 	
