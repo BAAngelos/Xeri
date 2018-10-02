@@ -47,8 +47,6 @@ public class TreeSearch {
 				expandNode(promisingNode);
 			}
 
-			System.out.println(promisingNode.getState().getSimulatedBoard().getP1Hand().size()+" in findeNExtMove");
-
 			// Phase 3 - Simulation
 			Node nodeToExplore = promisingNode;
 
