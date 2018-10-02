@@ -40,10 +40,12 @@ public class SimulatedBoard implements Serializable{
 		}
 
 		
-		p1Collect = Board.getInstance().getPlayPile();
-		p2Collect = Board.getInstance().getOppPile();
-		field = Board.getInstance().getBoardPile();
-		deck = Board.getInstance().getDeck();
+		p1Collect = new CardPile(Board.getInstance().getPlayPile());
+		p2Collect = new CardPile(Board.getInstance().getOppPile());
+		field = new CardPile(Board.getInstance().getBoardPile());
+		deck = new CardPile(Board.getInstance().getDeck());
+		System.out.println(Board.getInstance().getDeck());
+		System.out.println(this.deck);
 		deck.addAll(p2Hand);
 	}
 	
