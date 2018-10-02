@@ -2,7 +2,7 @@ package TheGame;
 
 import MonteCarloTreeSearch.*;
 
-public class MonteCarloAI extends Thread{
+public class MonteCarloAI extends Thread {
 
 	boolean first;
 	volatile boolean turn;
@@ -10,44 +10,25 @@ public class MonteCarloAI extends Thread{
 	TreeSearch mcts;
 
 	public MonteCarloAI(boolean goingFirst, String name) {
-			if(goingFirst) {
-				this.first = true;
-				this.turn = true;
-				}
-			else {
-				this.first = false;
-				this.turn = false;
-			}
-			this.name = name;
-			this.setName(name);
-			this.mcts = new TreeSearch();
+		if (goingFirst) {
+			this.first = true;
+			this.turn = false;
+		} else {
+			this.first = false;
+			this.turn = false;
 		}
+		this.name = name;
+		this.setName(name);
+		this.mcts = new TreeSearch();
+	}
 
 	@Override
 	public void run() {
-//		try {
-//			Board.getInstance().waitForNewGame();
-//			System.out.println(name + " Startet jetzt");
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
 
 		while (!HelpMethods.matchOver()) {
 
-			while (!HelpMethods.gameOver()) {
-
-				while (!HelpMethods.roundOver()) {
-					if (this.first && Board.getInstance().getPlayerHand().getComponentCount() == 0) {
-						break;
-					} else if (!this.first && Board.getInstance().getOppHand().getComponentCount() == 0) {
-						break;
-					}
-					if (this.turn) {
-						Board.getInstance().doMoveForMCTSKi(mcts.findNextMove("this Board", 1));
-					}
-
-				}
-
+			if (this.turn) {
+				Board.getInstance().doMoveForMCTSKi(mcts.findNextMove("this Board", 1));
 			}
 
 		}
