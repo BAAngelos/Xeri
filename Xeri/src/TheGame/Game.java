@@ -7,17 +7,20 @@ public class Game implements Runnable {
 	AlwaysLeftAi ki2;
 	MonteCarloAI mctsKi;
 	int goal;
+	boolean lastTakenTrick; //is true if the player on the bottom played the last Card else false
 
-	public Game() {
-		mctsKi = new MonteCarloAI(true, "MonteCarlo");
+	/**if you want to change the Ki you have to make following additional changes
+	 * -Game.getKi() method should return the rigth Ai
+	 * -Player and Opp ActionListener should activate the rigth AI
+	 * - */
+	public Game() {								
+		mctsKi = new MonteCarloAI(true, "MonteCarlo");			
 		mctsKi.start();
-//		ki = new AlwaysLeftAi(true, "player");
-//		ki2 = new AlwaysLeftAi(false, "opponent");
-//
-//		ki2.start();
+//		ki = new AlwaysLeftAi(true, "sad");
+//		ki2 = new AlwaysLeftAi(false, "asdasd");
+		
 //		ki.start();
-		
-		
+//		ki2.start();
 	}
 
 	@Override
@@ -26,28 +29,33 @@ public class Game implements Runnable {
 		while (!HelpMethods.matchOver()) {
 
 			Board.getInstance().resetBoard();
-			Board.getInstance().startNewGame();
+			System.out.println(Board.getInstance().getDeck());
+			Board.getInstance().initiateGame();
+			Game.getInstance().getKi().setTurn(true);
+
 
 			while (!HelpMethods.gameOver()) {
 
-				// System.out.println("player xeri -> "+
-				// Board.getInstance().getPlayPile().getNumberOfXeri());
-				// System.out.println("opp xeri -> "+
-				// Board.getInstance().getOppPile().getNumberOfXeri());
-
-				if (HelpMethods.roundOver()) {
-					System.out.println("runde ist vorbei--------------------------------------");
-
-					Board.getInstance().getDeck().deal(Board.getInstance().getOppHand());
-					Board.getInstance().getDeck().deal(Board.getInstance().getPlayerHand());
+				if (HelpMethods.roundOver() && !HelpMethods.gameOver()) {
+					System.out.println("runde ist vorbei--------------------------------------");					
+					Board.getInstance().deal();
 					Board.getInstance().validate();
-					Board.getInstance().startNewGame();
+					Game.getInstance().getKi().setTurn(true);
+
 				}
 				
 
 			}
-
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			
 			HelpMethods.distributeRestCards();
+			System.out.println("BoardPile->   "+Board.getInstance().getBoardPile());
 
 			System.out.println("Player: xires -> " + Board.getInstance().getPlayPile().getNumberOfXeri()
 					+ " + total Points " + Board.getInstance().getPlayPile().countPoints());
@@ -73,7 +81,10 @@ public class Game implements Runnable {
 
 	public MonteCarloAI getKi() {
 		return mctsKi;
+//		return this.ki;
 	}
+	
+	
 
 	public void setKi(AlwaysLeftAi ki) {
 		this.ki = ki;
@@ -93,6 +104,16 @@ public class Game implements Runnable {
 
 	public void setGoal(int goal) {
 		this.goal = goal;
+	}
+	
+	
+
+	public boolean isLastTakenTrick() {
+		return lastTakenTrick;
+	}
+
+	public void setLastTakenTrick(boolean lastPlayedCard) {
+		this.lastTakenTrick = lastPlayedCard;
 	}
 
 	public static void main(String[] args) {
