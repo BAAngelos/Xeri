@@ -25,6 +25,7 @@ public class CardPile extends ArrayList<Card> implements Serializable{
 		numberOfXeri++;
 	}
 	
+	//counts th points there is in a CArdPile
 	public int countPoints() {
 		int points = 0;
 		
@@ -36,6 +37,21 @@ public class CardPile extends ArrayList<Card> implements Serializable{
 			points += card.points;
 		}
 		return points+10*numberOfXeri;
+	}
+	
+	//counts the points in a cardPile wheer there is a maximum of 12 cards in it
+	public int countPointsForRound() {
+		int points = 0;
+		
+		if(this.size() > 0) {
+			points += 3;
+		}
+		
+		for (Card card : this) {
+			points += card.points;
+		}
+		return points+10*numberOfXeri;
+		
 	}
 	
 	public void resetPile() {
