@@ -20,9 +20,10 @@ public class PlayerHandActionListener implements ActionListener{
 	
 //			Game.getInstance().getKi2().setTurn(true);	
 
+//		Game.getInstance().getMonteCarloKi2().setTurn(true);
+		Game.getInstance().getdMctski().setTurn(true);
 		((Card)e.getSource()).removeActionListener(this);
 		Board.getInstance().validate();
-		Board.getInstance().notifyThread();
 		
 		
 	}

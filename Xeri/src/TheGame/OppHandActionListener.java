@@ -14,17 +14,15 @@ public class OppHandActionListener implements ActionListener{
 		Board.getInstance().getTableScrollPane().getHorizontalScrollBar().setValue(Board.getInstance().getTableScrollPane().getHorizontalScrollBar().getMaximum());
 		Board.getInstance().getOppHand().remove((Card)e.getSource());
 		Board.getInstance().getBoardPile().add((Card) e.getSource());
-		System.out.println("diese Karte wurde dem Board hinzugefürgt-> " + (Card) e.getSource());
 		Board.getInstance().checkTrick("opp");
 		
 		
 		if(!(Board.getInstance().getPlayerHand().getComponentCount() == 0)) {
-			Game.getInstance().getKi().setTurn(true);	
+			Game.getInstance().getMonteCarloKi().setTurn(true);	
 		}
 		
 		((Card)e.getSource()).removeActionListener(this);
 		Board.getInstance().validate();
-		Board.getInstance().notifyThread();
 
 
 	}
