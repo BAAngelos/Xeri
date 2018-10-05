@@ -17,6 +17,8 @@ public class State {
 
 	public State() {
 		simulatedBoard = new SimulatedBoard();
+		visitedCount = 0;
+		winCount = 0;
 	}
 
 	public State(State state) {
@@ -93,8 +95,8 @@ public class State {
 			this.simulatedBoard.performMove(this.playerNo, randomCard);
 			
 		}else if(playerNo == 2) {
-			int possibleCard = this.simulatedBoard.getDeck().size();
-			Card randomCard = simulatedBoard.getDeck().get((int) (Math.random() * possibleCard));
+			int possibleCard = this.simulatedBoard.getP2Hand().size();
+			Card randomCard = simulatedBoard.getP2Hand().get((int) (Math.random() * possibleCard));
 			this.simulatedBoard.performMove(this.playerNo, randomCard);
 		}
 		
@@ -104,10 +106,10 @@ public class State {
 	public List<State> getAllPossibleStates() {
 		List<State> possibleStates = new ArrayList<>();
 		if(playerNo == 1) {
-			for (int i = 0; i < simulatedBoard.getDeck().size(); i++) {
+			for (int i = 0; i < simulatedBoard.getP2Hand().size(); i++) {
 				SimulatedBoard newSim = (SimulatedBoard) SerializationUtils.clone(simulatedBoard);
 				State newState = new State(newSim);
-				newState.getSimulatedBoard().performMove(2, newState.getSimulatedBoard().getDeck().get(i));						//Syso
+				newState.getSimulatedBoard().performMove(2, newState.getSimulatedBoard().getP2Hand().get(i));						//Syso
 				possibleStates.add(newState);
 			}
 		}
@@ -123,6 +125,11 @@ public class State {
 		return possibleStates;
 	}
 	
+	public void add(State s) {
+		this.winCount += s.getWinScore();
+		this.visitedCount += s.getVisitCount();
+	}
+	
 
 	public State copyState(State s) {
 		State newState = new State();
@@ -132,5 +139,12 @@ public class State {
 		newState.setWinScore(s.getWinScore());
 		
 		return newState;
+	}
+	
+	public String toString() {
+		String tmp = "";
+		tmp += this.getWinScore()+"/"+this.getVisitCount();
+		
+		return tmp;
 	}
 }
