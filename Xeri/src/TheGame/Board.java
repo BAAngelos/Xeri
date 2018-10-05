@@ -189,7 +189,6 @@ public class Board extends JFrame {
 	public synchronized void startNewGame() {
 		System.out.println("ich starte Das spiel -Game");
 		notifyAll();
-		System.out.println("In Start new Game nach Notify "+Board.getInstance().getDeck());
 
 	}
 
@@ -198,26 +197,40 @@ public class Board extends JFrame {
 		System.out.println(name +" does a move");
 		if (first) {
 			((JButton) Board.getInstance().getPlayerHand().getComponent(0)).doClick();
-			Game.getInstance().getKi().setTurn(false);
+			Game.getInstance().getMonteCarloKi().setTurn(false);
 
 		} else {
 			((JButton) Board.getInstance().getOppHand().getComponent(0)).doClick();
-			Game.getInstance().getKi2().setTurn(false);
+			Game.getInstance().getAlwayLeftKi2().setTurn(false);
 
 		}
 	}
 	
-	public synchronized void doMoveForMCTSKi(Card c) {
-		int CardsInHand = Board.getInstance().getPlayerHand().getComponentCount();
-		for (int i = 0; i < CardsInHand; i++) {
-			if(Board.getInstance().getPlayerHand().getComponent(i).equals(c)) {
-				 ((AbstractButton) Board.getInstance().getPlayerHand().getComponent(i)).doClick();
-				 Game.getInstance().getKi().setTurn(false);
-				 return;
+	public synchronized void doMoveForMCTSKi(Card c, boolean player) {
+		if(player) {
+			int CardsInHand = Board.getInstance().getPlayerHand().getComponentCount();
+			for (int i = 0; i < CardsInHand; i++) {
+				if(Board.getInstance().getPlayerHand().getComponent(i).equals(c)) {
+					 ((AbstractButton) Board.getInstance().getPlayerHand().getComponent(i)).doClick();
+					 Game.getInstance().getMonteCarloKi().setTurn(false);
+					 return;
+				}
+				
 			}
-			
+			Game.getInstance().getMonteCarloKi().setTurn(false);
+		}else {
+			int CardsInHand = Board.getInstance().getOppHand().getComponentCount();
+			for (int i = 0; i < CardsInHand; i++) {
+				if(Board.getInstance().getOppHand().getComponent(i).equals(c)) {
+					 ((AbstractButton) Board.getInstance().getOppHand().getComponent(i)).doClick();
+					 Game.getInstance().getdMctski().setTurn(false);
+					 return;
+				}
+				
+			}
+			Game.getInstance().getMonteCarloKi2().setTurn(false);
 		}
-		Game.getInstance().getKi().setTurn(false);
+
 	}
 	
 	public synchronized void notifyThread() {
