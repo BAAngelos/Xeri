@@ -9,26 +9,21 @@ import TheGame.Card;
 
 public class TreeSearch {
 
-	private int level;
+	private boolean player;
+	//The player attribute determines for wich side th AI should play -> true=bottom ; false=top
 	private int opponent;
 
-	public TreeSearch() {
-		this.level = 3;
+	public TreeSearch(boolean player) {
+		this.player = player;
 	}
 
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
 
 
 	public   Card findNextMove(String thisBoard, int playerNo) {
-		SimulatedBoard board = new SimulatedBoard("this Board");
+		int countSimulations = 0;
+		SimulatedBoard board = new SimulatedBoard("this Board", player);
 		long start = System.currentTimeMillis();
-		long end = start + 4000;
+		long end = start + 1000;
 
 		
 		opponent = 3 - playerNo;
@@ -38,7 +33,9 @@ public class TreeSearch {
 		rootNode.getState().setPlayerNo(opponent);
 		
 
-		while (System.currentTimeMillis() < end) { //end
+		while (System.currentTimeMillis() < end) { //countSimulations < 100
+			System.out.println("in alte Mcts");
+			countSimulations++;
 			// Phase 1 - Selection
 			Node promisingNode = selectPromisingNode(rootNode);
 
@@ -66,7 +63,7 @@ public class TreeSearch {
 		List<Card> winnerList = new ArrayList<>(winnerNode.getState().getSimulatedBoard().getP1Hand());
 		parentList.removeAll(winnerList);
 		cardToPlay = parentList.get(0);
-		
+		System.out.println(countSimulations);
 		return cardToPlay;
 	}
 
