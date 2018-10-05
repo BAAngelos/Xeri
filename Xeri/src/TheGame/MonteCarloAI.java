@@ -4,22 +4,22 @@ import MonteCarloTreeSearch.*;
 
 public class MonteCarloAI extends Thread {
 
-	boolean first;
+	boolean player;
 	volatile boolean turn;
 	String name;
 	TreeSearch mcts;
 
 	public MonteCarloAI(boolean goingFirst, String name) {
 		if (goingFirst) {
-			this.first = true;
+			this.player = true;
 			this.turn = false;
 		} else {
-			this.first = false;
+			this.player = false;
 			this.turn = false;
 		}
 		this.name = name;
 		this.setName(name);
-		this.mcts = new TreeSearch();
+		this.mcts = new TreeSearch(player);
 	}
 
 	@Override
@@ -28,19 +28,19 @@ public class MonteCarloAI extends Thread {
 		while (!HelpMethods.matchOver()) {
 
 			if (this.turn) {
-				Board.getInstance().doMoveForMCTSKi(mcts.findNextMove("this Board", 1));
+				Board.getInstance().doMoveForMCTSKi(mcts.findNextMove("this Board", 1), player);
 			}
 
 		}
 
 	}
 
-	public boolean isFirst() {
-		return first;
+	public boolean isPlayer1() {
+		return player;
 	}
 
-	public void setFirst(boolean first) {
-		this.first = first;
+	public void setPlayer1(boolean first) {
+		this.player = first;
 	}
 
 	public boolean isTurn() {
