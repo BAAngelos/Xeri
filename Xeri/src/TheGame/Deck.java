@@ -1,7 +1,6 @@
 package TheGame;
 import java.util.Collections;
 
-import javax.swing.JPanel;
 
 public class Deck extends CardPile{
 
@@ -21,19 +20,7 @@ public class Deck extends CardPile{
 		Collections.shuffle(this);
 	}
 	
-//	public synchronized void deal(JPanel panel) {
-//		for (int i = 0; i < 6; i++) {
-//			if(panel.equals(Board.getInstance().getPlayerHand())) {
-//				this.get(0).addActionListener(new PlayerHandActionListener());
-//			}else {
-//				this.get(0).addActionListener(new OppHandActionListener());
-//			}
-//			panel.add(this.get(0));
-//			this.remove(0);
-//		}
-//		
-//	}
-//	
+
 	public void firstFourCards() {
 		for (int i = 0; i < 4; i++) {
 			Board.getInstance().getTable().add(Board.getInstance().getDeck().get(0));
