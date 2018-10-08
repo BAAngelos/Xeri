@@ -18,7 +18,10 @@ public class OppHandActionListener implements ActionListener{
 		
 		
 		if(!(Board.getInstance().getPlayerHand().getComponentCount() == 0)) {
-			Game.getInstance().getMonteCarloKi().setTurn(true);	
+//			Game.getInstance().getMonteCarloKi().setTurn(true);	
+//			Game.getInstance().getRandomPlayKi().setTurn(true);
+//			Game.getInstance().getHcBaseKi().setTurn(true);
+
 		}
 		
 		((Card)e.getSource()).removeActionListener(this);
