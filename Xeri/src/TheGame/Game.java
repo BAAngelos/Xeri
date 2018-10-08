@@ -1,13 +1,18 @@
 package TheGame;
 
+import AIs.*;
+
 public class Game implements Runnable {
 
 	public static Game game;
-	AlwaysLeftAi ki;
-	AlwaysLeftAi ki2;
+	RandomPlayAi ki;
+	RandomPlayAi ki2;
 	MonteCarloAI mctsKi;
 	MonteCarloAI mctsKi2;
 	DeterministicMCTSAI dMctski;
+	DeterministicMCTSAI dMctski2;
+	HCBaseAi hcBaseKi;
+	HCBaseAi hcBaseKi2;
 	int goal;
 	boolean lastTakenTrick; //is true if the player on the bottom played the last Card else false
 
@@ -16,18 +21,23 @@ public class Game implements Runnable {
 	 * -Player and Opp ActionListener should activate the rigth AI 
 	*/
 	public Game() {
-		dMctski = new DeterministicMCTSAI(false, "test");
+//		dMctski = new DeterministicMCTSAI(false, "test");
+//		dMctski.start();
 		
-		mctsKi = new MonteCarloAI(true, "MonteCarlo");
+//		hcBaseKi = new HCBaseAi(true, "HCBase");
+//		hcBaseKi.start();
+		hcBaseKi2 = new HCBaseAi(false, "HCBaseOpp");
+		hcBaseKi2.start();
+		
+		
+//		mctsKi = new MonteCarloAI(true, "MonteCarlo");
 //		mctsKi2 = new MonteCarloAI(false, "OppCarlo");
-		mctsKi.start();
-		dMctski.start();
+//		mctsKi.start();
 //		mctsKi2.start();
 		
 
-//		ki = new AlwaysLeftAi(true, "sad");
-//		ki2 = new AlwaysLeftAi(false, "asdasd");
-		
+//		ki = new RandomPlayAi(true, "sad");
+//		ki2 = new RandomPlayAi(false, "asdasd");
 //		ki.start();
 //		ki2.start();
 	}
@@ -38,9 +48,10 @@ public class Game implements Runnable {
 		while (!HelpMethods.matchOver()) {
 
 			Board.getInstance().resetBoard();
-//			System.out.println(Board.getInstance().getDeck());
 			Board.getInstance().initiateGame();
-			Game.getInstance().getMonteCarloKi().setTurn(true);
+//			Game.getInstance().getMonteCarloKi().setTurn(true);
+//			Game.getInstance().getRandomPlayKi().setTurn(true);
+//			Game.getInstance().getHcBaseKi().setTurn(true);
 
 
 			while (!HelpMethods.gameOver()) {
@@ -49,12 +60,18 @@ public class Game implements Runnable {
 					System.out.println("runde ist vorbei--------------------------------------");					
 					Board.getInstance().deal();
 					Board.getInstance().validate();
-					Game.getInstance().getMonteCarloKi().setTurn(true);
+//					Game.getInstance().getMonteCarloKi().setTurn(true);
+//					Game.getInstance().getRandomPlayKi().setTurn(true);
+//					Game.getInstance().getHcBaseKi().setTurn(true);
+
+
 
 				}
 				
 
 			}
+			
+			HelpMethods.distributeRestCards();
 			
 			try {
 				Thread.sleep(500);
@@ -63,7 +80,7 @@ public class Game implements Runnable {
 			}
 			
 			
-			HelpMethods.distributeRestCards();
+			
 
 			System.out.println("Player: xires -> " + Board.getInstance().getPlayPile().getNumberOfXeri()
 					+ " + total Points " + Board.getInstance().getPlayPile().countPoints());
@@ -102,25 +119,39 @@ public class Game implements Runnable {
 		return mctsKi2;
 	}
 	
-	public AlwaysLeftAi getAlwayLeftKi() {
+	public RandomPlayAi getRandomPlayKi() {
 		return this.ki;
 	}
 	
-	public AlwaysLeftAi getAlwayLeftKi2() {
+	public RandomPlayAi getRandomPlayKi2() {
 		return ki2;
 	}
 	
+	public HCBaseAi getHcBaseKi() {
+		return hcBaseKi;
+	}
+	
+	public HCBaseAi getHcBaseKi2(){
+		return hcBaseKi2;
+	}
+	
+	//---------------------------------------------
+
+	public void setHcBaseKi(HCBaseAi hcBaseKi) {
+		this.hcBaseKi = hcBaseKi;
+	}
+
 	public void setdMctski(DeterministicMCTSAI dMctski) {
 		this.dMctski = dMctski;
 	}
 
-	public void setKi(AlwaysLeftAi ki) {
+	public void setKi(RandomPlayAi ki) {
 		this.ki = ki;
 	}
 
 
 
-	public void setKi2(AlwaysLeftAi ki2) {
+	public void setKi2(RandomPlayAi ki2) {
 		this.ki2 = ki2;
 	}
 
