@@ -1,6 +1,8 @@
-package TheGame;
+package AIs;
 
 import MonteCarloTreeSearch.*;
+import TheGame.Board;
+import TheGame.HelpMethods;
 
 public class DeterministicMCTSAI extends Thread {
 
@@ -28,7 +30,7 @@ public class DeterministicMCTSAI extends Thread {
 		while (!HelpMethods.matchOver()) {
 
 			if (this.turn) {
-				Board.getInstance().doMoveForMCTSKi(mcts.findNextMove("this Board", 1), player);
+				Board.getInstance().doMoveForKi(mcts.findNextMove("this Board", 1), player);
 			}
 
 		}
