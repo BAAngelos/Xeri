@@ -43,9 +43,7 @@ public class CardPile extends ArrayList<Card> implements Serializable{
 	public int countPointsForRound() {
 		int points = 0;
 		
-		if(this.size() > 0) {
-			points += 3;
-		}
+		points += this.size()*1.1 + 0.5;
 		
 		for (Card card : this) {
 			points += card.points;
