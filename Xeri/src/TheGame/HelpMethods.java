@@ -12,7 +12,11 @@ public class HelpMethods {
 	}
 
 	public static boolean playedJack() {
-		return Board.getInstance().getBoardPile().get(Board.getInstance().getBoardPile().size() - 1).getValue() == 11;
+		boolean tmp = false;
+		if((Board.getInstance().getBoardPile().size()>1) && Board.getInstance().getBoardPile().get(Board.getInstance().getBoardPile().size() - 1).getValue() == 11) {
+			tmp = true;
+		}
+		return tmp;
 	}
 
 	// round Over when all the cards in the hands have been played but not all the
