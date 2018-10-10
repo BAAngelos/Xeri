@@ -144,6 +144,7 @@ public class Board extends JFrame {
 			Board.getInstance().getDeck().remove(0);
 			
 			Board.getInstance().getDeck().get(0).addActionListener(new OppHandActionListener());
+			Board.getInstance().getDeck().get(0).turnOver();
 			Board.getInstance().getOppHand().add(Board.getInstance().getDeck().get(0));
 			Board.getInstance().getDeck().remove(0);
 		}
