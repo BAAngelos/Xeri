@@ -25,6 +25,7 @@ public class Deck extends CardPile{
 		for (int i = 0; i < 4; i++) {
 			if(i != 3) {
 				Board.getInstance().getDeck().get(0).setFirstThreeCards(true);
+				Board.getInstance().getDeck().get(0).turnOver();
 			}
 			Board.getInstance().getTable().add(Board.getInstance().getDeck().get(0));
 			Board.getInstance().getBoardPile().add(Board.getInstance().getDeck().get(0));
