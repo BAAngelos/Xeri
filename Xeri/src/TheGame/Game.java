@@ -1,6 +1,7 @@
 package TheGame;
 
 import AIs.*;
+import MonteCarloTreeSearch.DTreeSearchWithHeavyPlayout;
 
 public class Game implements Runnable {
 
@@ -13,6 +14,9 @@ public class Game implements Runnable {
 	DeterministicMCTSAI dMctski2;
 	HCBaseAi hcBaseKi;
 	HCBaseAi hcBaseKi2;
+	DMctsWithHeavyPlayoutAI dMctsWithHPki;
+	DMctsWithHeavyPlayoutAI dMctsWithHPki2;
+
 	int goal;
 	boolean lastTakenTrick; //is true if the player on the bottom played the last Card else false
 
@@ -23,11 +27,13 @@ public class Game implements Runnable {
 	public Game() {
 //		dMctski = new DeterministicMCTSAI(false, "test");
 //		dMctski.start();
+//		dMctski2 = new DeterministicMCTSAI(false, "DMCTS OPP");
+//		dMctski2.start();
 		
-//		hcBaseKi = new HCBaseAi(true, "HCBase");
-//		hcBaseKi.start();
-		hcBaseKi2 = new HCBaseAi(false, "HCBaseOpp");
-		hcBaseKi2.start();
+		hcBaseKi = new HCBaseAi(true, "HCBase");
+		hcBaseKi.start();
+//		hcBaseKi2 = new HCBaseAi(false, "HCBaseOpp");
+//		hcBaseKi2.start();
 		
 		
 //		mctsKi = new MonteCarloAI(true, "MonteCarlo");
@@ -35,7 +41,11 @@ public class Game implements Runnable {
 //		mctsKi.start();
 //		mctsKi2.start();
 		
-
+//		dMctsWithHPki = new DMctsWithHeavyPlayoutAI(true, "mctsWitchHeavy");
+//		dMctsWithHPki.start();
+		dMctsWithHPki2 = new DMctsWithHeavyPlayoutAI(false, "Heavy Playout Opp");
+		dMctsWithHPki2.start();
+		
 //		ki = new RandomPlayAi(true, "sad");
 //		ki2 = new RandomPlayAi(false, "asdasd");
 //		ki.start();
@@ -43,16 +53,18 @@ public class Game implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public void run() { 
 
 		while (!HelpMethods.matchOver()) {
 
 			Board.getInstance().resetBoard();
 			Board.getInstance().initiateGame();
+			Board.getInstance().validate();
 //			Game.getInstance().getMonteCarloKi().setTurn(true);
 //			Game.getInstance().getRandomPlayKi().setTurn(true);
-//			Game.getInstance().getHcBaseKi().setTurn(true);
-
+			Game.getInstance().getHcBaseKi().setTurn(true);
+//			Game.getInstance().getdMctsWithHPki().setTurn(true);
+			
 
 			while (!HelpMethods.gameOver()) {
 
@@ -62,7 +74,9 @@ public class Game implements Runnable {
 					Board.getInstance().validate();
 //					Game.getInstance().getMonteCarloKi().setTurn(true);
 //					Game.getInstance().getRandomPlayKi().setTurn(true);
-//					Game.getInstance().getHcBaseKi().setTurn(true);
+					Game.getInstance().getHcBaseKi().setTurn(true);
+//					Game.getInstance().getdMctsWithHPki().setTurn(true);
+
 
 
 
@@ -105,11 +119,15 @@ public class Game implements Runnable {
 	}
 	
 	
+	//-----------------AI Getters-----------------
 
 	public DeterministicMCTSAI getdMctski() {
 		return dMctski;
 	}
-
+	public DeterministicMCTSAI getdMctski2() {
+		
+		return this.dMctski2;
+	}
 
 	public MonteCarloAI getMonteCarloKi() {
 		return mctsKi;
@@ -135,7 +153,20 @@ public class Game implements Runnable {
 		return hcBaseKi2;
 	}
 	
+	public DMctsWithHeavyPlayoutAI getdMctsWithHPki() {
+		return dMctsWithHPki;
+	}
+
+	public DMctsWithHeavyPlayoutAI getdMctsWithHPki2() {
+		return dMctsWithHPki2;
+	}
+
+	
+	
 	//---------------------------------------------
+
+
+
 
 	public void setHcBaseKi(HCBaseAi hcBaseKi) {
 		this.hcBaseKi = hcBaseKi;
@@ -178,5 +209,7 @@ public class Game implements Runnable {
 		new Thread(Game.getInstance()).start();
 		
 	}
+
+
 
 }
