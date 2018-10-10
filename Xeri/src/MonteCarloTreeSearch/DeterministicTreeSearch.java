@@ -36,7 +36,7 @@ public class DeterministicTreeSearch {
 			rootNode.getState().setPlayerNo(opponent);
 			
 			
-			while (countSimulations < 50) { 
+			while (countSimulations < 70) { 
 				System.out.println("newuw Mcts");
 				countSimulations++;
 				// Phase 1 - Selection
@@ -67,10 +67,20 @@ public class DeterministicTreeSearch {
 		Node winnerNode = endRootNode.getChildWithMaxScore();
 
 		Card cardToPlay = null;
-		List<Card> parentList = new ArrayList<Card>(winnerNode.getParent().getState().getSimulatedBoard().getP1Hand());
-		List<Card> winnerList = new ArrayList<>(winnerNode.getState().getSimulatedBoard().getP1Hand());
-		parentList.removeAll(winnerList);
+
+		ArrayList<Card> parentList = new ArrayList<Card>(winnerNode.getParent().getState().getSimulatedBoard().getP1Hand());
+		ArrayList<Card> winnerList = new ArrayList<Card>(winnerNode.getState().getSimulatedBoard().getP1Hand());
+
+		for (Card card : winnerList) {
+			for (Card cardJ : parentList) {
+				if(card.isEquals(cardJ)) {
+					parentList.remove(cardJ);
+					break;
+				}
+			}
+		}
 		cardToPlay = parentList.get(0);
+
 
 		return cardToPlay;
 	}
@@ -112,10 +122,10 @@ public class DeterministicTreeSearch {
 		State tempState = new State(tmpSim, player);
 		int boardStatus = tempState.getSimulatedBoard().checkStatus();
 
-		// if (boardStatus == opponent) {
-		// tempNode.getParent().getState().setWinScore(Integer.MIN_VALUE);
-		// return boardStatus;
-		// }
+		 if (boardStatus == opponent) {
+		 node.getParent().getState().setWinScore(Integer.MIN_VALUE);
+		 return boardStatus;
+		 }
 		while (boardStatus == SimulatedBoard.IN_PROGRESS) {
 			tempState.togglePlayer();
 			tempState.randomPlay();

@@ -31,6 +31,7 @@ public class DeterministicMCTSAI extends Thread {
 
 			if (this.turn) {
 				Board.getInstance().doMoveForKi(mcts.findNextMove("this Board", 1), player);
+				this.turn = false;
 			}
 
 		}
