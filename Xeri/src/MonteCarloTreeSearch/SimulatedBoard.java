@@ -281,17 +281,20 @@ public class SimulatedBoard implements Serializable{
 	}
 	
 	public String toString() {
-		String tmp = "Player Hand: ";
+		String tmp = "Opp Hand:   ";
 		
-		for (int i = 0; i < p1Hand.size(); i++) {
-			tmp += p1Hand.get(i).toString() + " ; ";
+		for (int i = 0; i < p2Hand.size(); i++) {
+			tmp += p2Hand.get(i).toString() + " ; ";
 		}
-		tmp += "\nField: ";
+		tmp += "\nField:   ";
 		for (int i = 0; i < field.size(); i++) {
 			tmp += field.get(i) +" ; ";
 		}
+		tmp += "\nPlayer Hand: ";
+		for (int i = 0; i < p1Hand.size(); i++) {
+			tmp += p1Hand.get(i).toString() + " ; ";
+		}
 		tmp += "\n";
-		
 		
 		
 		return tmp;
