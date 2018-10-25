@@ -202,6 +202,14 @@ public class Board extends JFrame {
 			for (int i = 0; i < CardsInHand; i++) {
 				if(Board.getInstance().getPlayerHand().getComponent(i).equals(c)) {
 					 ((AbstractButton) Board.getInstance().getPlayerHand().getComponent(i)).doClick();
+					 try {
+						Thread.sleep(300);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					if(Board.getInstance().getPlayerHand().getComponentCount() == 0 && Board.getInstance().getOppHand().getComponentCount() == 0 && Board.getInstance().getDeck().size() == 0) {
+							Game.switchSide = true;
+					}
 					 return;
 				}
 				
@@ -211,6 +219,14 @@ public class Board extends JFrame {
 			for (int i = 0; i < CardsInHand; i++) {
 				if(Board.getInstance().getOppHand().getComponent(i).equals(c)) {
 					 ((AbstractButton) Board.getInstance().getOppHand().getComponent(i)).doClick();
+					 try {
+						Thread.sleep(300);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					 if(Board.getInstance().getPlayerHand().getComponentCount() == 0 && Board.getInstance().getOppHand().getComponentCount() == 0 && Board.getInstance().getDeck().size() == 0) {
+							Game.switchSide = true;
+					 }
 					 return;
 				}
 			}
